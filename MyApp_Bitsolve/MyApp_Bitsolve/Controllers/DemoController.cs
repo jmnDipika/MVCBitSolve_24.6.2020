@@ -14,5 +14,10 @@ namespace MyApp_Bitsolve.Controllers
         {
             return View();
         }
+        [HttpGet]
+        public ActionResult Index()
+        {
+            return View();
+        }
 	}
 }
