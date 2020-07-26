@@ -1,0 +1,1055 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MyApp_BitSolveModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityContainer Name="MyApp_BitSolveModelStoreContainer">
+          <EntitySet Name="tblBidDetails" EntityType="MyApp_BitSolveModel.Store.tblBidDetails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblBidMaster" EntityType="MyApp_BitSolveModel.Store.tblBidMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblChangePassword" EntityType="MyApp_BitSolveModel.Store.tblChangePassword" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblCompany" EntityType="MyApp_BitSolveModel.Store.tblCompany" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblCountry" EntityType="MyApp_BitSolveModel.Store.tblCountry" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblCustomer" EntityType="MyApp_BitSolveModel.Store.tblCustomer" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblDepartment" EntityType="MyApp_BitSolveModel.Store.tblDepartment" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblDesignation" EntityType="MyApp_BitSolveModel.Store.tblDesignation" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblEmployee" EntityType="MyApp_BitSolveModel.Store.tblEmployee" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblItemMaster" EntityType="MyApp_BitSolveModel.Store.tblItemMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblMainMenu" EntityType="MyApp_BitSolveModel.Store.tblMainMenu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblRFQ" EntityType="MyApp_BitSolveModel.Store.tblRFQ" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblRFQDetails" EntityType="MyApp_BitSolveModel.Store.tblRFQDetails" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblRoleMaster" EntityType="MyApp_BitSolveModel.Store.tblRoleMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblSubMenu" EntityType="MyApp_BitSolveModel.Store.tblSubMenu" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblSupplier" EntityType="MyApp_BitSolveModel.Store.tblSupplier" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblTaxMaster" EntityType="MyApp_BitSolveModel.Store.tblTaxMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblTypeMaster" EntityType="MyApp_BitSolveModel.Store.tblTypeMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="tblUnitMaster" EntityType="MyApp_BitSolveModel.Store.tblUnitMaster" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserRoleMaster" EntityType="MyApp_BitSolveModel.Store.UserRoleMaster" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK__tblRFQDet__RfqId__72C60C4A" Association="MyApp_BitSolveModel.Store.FK__tblRFQDet__RfqId__72C60C4A">
+            <End Role="tblRFQ" EntitySet="tblRFQ" />
+            <End Role="tblRFQDetails" EntitySet="tblRFQDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tblSubMen__MenuI__5224328E" Association="MyApp_BitSolveModel.Store.FK__tblSubMen__MenuI__5224328E">
+            <End Role="tblMainMenu" EntitySet="tblMainMenu" />
+            <End Role="tblSubMenu" EntitySet="tblSubMenu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblBidDetails_tblBidMaster" Association="MyApp_BitSolveModel.Store.FK_tblBidDetails_tblBidMaster">
+            <End Role="tblBidMaster" EntitySet="tblBidMaster" />
+            <End Role="tblBidDetails" EntitySet="tblBidDetails" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblBidDetails">
+          <Key>
+            <PropertyRef Name="BidDetailId" />
+          </Key>
+          <Property Name="BidDetailId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BidId" Type="bigint" Nullable="false" />
+          <Property Name="RfqDetailsId" Type="bigint" Nullable="false" />
+          <Property Name="ItemId" Type="bigint" Nullable="false" />
+          <Property Name="HSN" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="ManufacturedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="Qty" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="TaxId" Type="int" />
+          <Property Name="SubTotal" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblBidMaster">
+          <Key>
+            <PropertyRef Name="BidId" />
+          </Key>
+          <Property Name="BidId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BidNo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BidDate" Type="date" Nullable="false" />
+          <Property Name="RFQId" Type="bigint" />
+          <Property Name="BidLevelId" Type="int" />
+          <Property Name="supplierId" Type="nvarchar" MaxLength="500" />
+          <Property Name="NetAmount" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="TotalAmount" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="date" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblChangePassword">
+          <Key>
+            <PropertyRef Name="ChPwdId" />
+          </Key>
+          <Property Name="ChPwdId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmpId" Type="bigint" Nullable="false" />
+          <Property Name="OldPassword" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="NewPassword" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblCompany">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="City" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="PinCode" Type="nvarchar" Nullable="false" MaxLength="10" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" />
+          <Property Name="Website" Type="nvarchar" MaxLength="100" />
+          <Property Name="TelephoneNo" Type="nvarchar" Nullable="false" MaxLength="25" />
+          <Property Name="MobileNo" Type="nvarchar" Nullable="false" MaxLength="15" />
+          <Property Name="FaxNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="GSTIN" Type="nvarchar" MaxLength="20" />
+          <Property Name="BankName" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankAccountNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="BankIFSCNo" Type="nvarchar" MaxLength="10" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="Logo" Type="varbinary(max)" />
+          <Property Name="LogoPath" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="tblCountry">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="CountryId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Name="CustomerId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="nvarchar" MaxLength="500" />
+          <Property Name="CustomerCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="District" Type="nvarchar" MaxLength="100" />
+          <Property Name="PinCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Owner" Type="nvarchar" MaxLength="100" />
+          <Property Name="MobileNo1" Type="nvarchar" MaxLength="15" />
+          <Property Name="MobileNo2" Type="nvarchar" MaxLength="15" />
+          <Property Name="TelePhone1" Type="nvarchar" MaxLength="20" />
+          <Property Name="TelePhone2" Type="nvarchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="VAT" Type="nvarchar" MaxLength="15" />
+          <Property Name="CST" Type="nvarchar" MaxLength="15" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tblDesignation">
+          <Key>
+            <PropertyRef Name="DesignationId" />
+          </Key>
+          <Property Name="DesignationId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Name="EmpId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeNo" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="DesignationId" Type="int" />
+          <Property Name="DeptId" Type="int" />
+          <Property Name="MobileNo" Type="nvarchar" MaxLength="50" />
+          <Property Name="Fax" Type="nvarchar" MaxLength="50" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+          <Property Name="ImageName" Type="nvarchar" MaxLength="300" />
+          <Property Name="ImageInBytes" Type="varbinary(max)" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="200" />
+          <Property Name="EmpPassword" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tblItemMaster">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ItemCode" Type="nvarchar" MaxLength="300" />
+          <Property Name="ItemName" Type="nvarchar" Nullable="false" MaxLength="300" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="TypeId" Type="int" />
+          <Property Name="UOMId" Type="int" />
+          <Property Name="Price" Type="decimal" Scale="2" />
+          <Property Name="ManufacturedBy" Type="nvarchar" MaxLength="300" />
+          <Property Name="SerialNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="BatchNo" Type="nvarchar" MaxLength="100" />
+          <Property Name="HSN" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblMainMenu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Name="MenuId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MenuName" Type="nvarchar" Nullable="false" MaxLength="300" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="IconClass" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="tblRFQ">
+          <Key>
+            <PropertyRef Name="RfqId" />
+          </Key>
+          <Property Name="RfqId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RfqNo" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="RfqDate" Type="date" />
+          <Property Name="OrderDate" Type="date" />
+          <Property Name="CompanyName" Type="nvarchar" Nullable="false" MaxLength="200" />
+          <Property Name="DeliverTo" Type="nvarchar" Nullable="false" MaxLength="500" />
+          <Property Name="ScheduleDate" Type="date" />
+          <Property Name="BidValidUntil" Type="date" />
+          <Property Name="TotalAmount" Type="decimal" Scale="2" />
+          <Property Name="CreatedDate" Type="date" />
+          <Property Name="createdBy" Type="int" Nullable="false" />
+          <Property Name="isDeleted" Type="bit" />
+          <Property Name="ModifiedDate" Type="date" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="SupplierId" Type="nvarchar(max)" />
+          <Property Name="IsEmailSent" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblRFQDetails">
+          <Key>
+            <PropertyRef Name="RfqDetailsId" />
+          </Key>
+          <Property Name="RfqDetailsId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RfqId" Type="bigint" Nullable="false" />
+          <Property Name="ItemId" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="ManufacturedBy" Type="nvarchar" MaxLength="100" />
+          <Property Name="Qty" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="UnitId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="TaxId" Type="int" Nullable="false" />
+          <Property Name="SubTotal" Type="decimal" Nullable="false" Scale="2" />
+          <Property Name="isDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblRoleMaster">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="RoleId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="nvarchar" Nullable="false" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="tblSubMenu">
+          <Key>
+            <PropertyRef Name="SubMenuId" />
+          </Key>
+          <Property Name="SubMenuId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MenuId" Type="int" Nullable="false" />
+          <Property Name="SubMenuName" Type="nvarchar" MaxLength="300" />
+          <Property Name="ControllerName" Type="nvarchar" MaxLength="300" />
+          <Property Name="ActionName" Type="nvarchar" MaxLength="300" />
+          <Property Name="isActive" Type="bit" />
+          <Property Name="IconClass" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="datetime" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="ModifiedDate" Type="datetime" />
+          <Property Name="ModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="tblSupplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Name="SupplierId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierName" Type="nvarchar" MaxLength="500" />
+          <Property Name="SupplierCode" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="District" Type="nvarchar" MaxLength="100" />
+          <Property Name="PinCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" />
+          <Property Name="Owner" Type="nvarchar" MaxLength="100" />
+          <Property Name="MobileNo1" Type="nvarchar" MaxLength="15" />
+          <Property Name="MobileNo2" Type="nvarchar" MaxLength="15" />
+          <Property Name="TelePhone1" Type="nvarchar" MaxLength="20" />
+          <Property Name="TelePhone2" Type="nvarchar" MaxLength="20" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="VAT" Type="nvarchar" MaxLength="15" />
+          <Property Name="CST" Type="nvarchar" MaxLength="15" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblTaxMaster">
+          <Key>
+            <PropertyRef Name="TaxId" />
+          </Key>
+          <Property Name="TaxId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TaxName" Type="nvarchar" MaxLength="100" />
+          <Property Name="TaxValue" Type="decimal" Scale="2" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblTypeMaster">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblUnitMaster">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Name="UnitId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="50" />
+          <Property Name="abbreviation" Type="nvarchar" MaxLength="20" />
+          <Property Name="IsDeleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="UserRoleMaster">
+          <Key>
+            <PropertyRef Name="UserRoleId" />
+          </Key>
+          <Property Name="UserRoleId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="bigint" Nullable="false" />
+          <Property Name="RoleId" Type="bigint" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__tblRFQDet__RfqId__72C60C4A">
+          <End Role="tblRFQ" Type="MyApp_BitSolveModel.Store.tblRFQ" Multiplicity="1" />
+          <End Role="tblRFQDetails" Type="MyApp_BitSolveModel.Store.tblRFQDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRFQ">
+              <PropertyRef Name="RfqId" />
+            </Principal>
+            <Dependent Role="tblRFQDetails">
+              <PropertyRef Name="RfqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tblSubMen__MenuI__5224328E">
+          <End Role="tblMainMenu" Type="MyApp_BitSolveModel.Store.tblMainMenu" Multiplicity="1" />
+          <End Role="tblSubMenu" Type="MyApp_BitSolveModel.Store.tblSubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMainMenu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="tblSubMenu">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblBidDetails_tblBidMaster">
+          <End Role="tblBidMaster" Type="MyApp_BitSolveModel.Store.tblBidMaster" Multiplicity="1" />
+          <End Role="tblBidDetails" Type="MyApp_BitSolveModel.Store.tblBidDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBidMaster">
+              <PropertyRef Name="BidId" />
+            </Principal>
+            <Dependent Role="tblBidDetails">
+              <PropertyRef Name="BidId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MyApp_BitSolveModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MyApp_BitSolveEntities" p1:LazyLoadingEnabled="true">
+          <EntitySet Name="tblTypeMasters" EntityType="MyApp_BitSolveModel.tblTypeMaster" />
+          <EntitySet Name="tblCompanies" EntityType="MyApp_BitSolveModel.tblCompany" />
+          <EntitySet Name="tblCountries" EntityType="MyApp_BitSolveModel.tblCountry" />
+          <EntitySet Name="tblCustomers" EntityType="MyApp_BitSolveModel.tblCustomer" />
+          <EntitySet Name="tblItemMasters" EntityType="MyApp_BitSolveModel.tblItemMaster" />
+          <EntitySet Name="tblSuppliers" EntityType="MyApp_BitSolveModel.tblSupplier" />
+          <EntitySet Name="tblUnitMasters" EntityType="MyApp_BitSolveModel.tblUnitMaster" />
+          <EntitySet Name="tblDepartments" EntityType="MyApp_BitSolveModel.tblDepartment" />
+          <EntitySet Name="tblDesignations" EntityType="MyApp_BitSolveModel.tblDesignation" />
+          <EntitySet Name="tblEmployees" EntityType="MyApp_BitSolveModel.tblEmployee" />
+          <EntitySet Name="tblTaxMasters" EntityType="MyApp_BitSolveModel.tblTaxMaster" />
+          <EntitySet Name="tblChangePasswords" EntityType="MyApp_BitSolveModel.tblChangePassword" />
+          <EntitySet Name="tblRoleMasters" EntityType="MyApp_BitSolveModel.tblRoleMaster" />
+          <EntitySet Name="UserRoleMasters" EntityType="MyApp_BitSolveModel.UserRoleMaster" />
+          <EntitySet Name="tblRFQDetails" EntityType="MyApp_BitSolveModel.tblRFQDetail" />
+          <EntitySet Name="tblRFQs" EntityType="MyApp_BitSolveModel.tblRFQ" />
+          <AssociationSet Name="FK__tblRFQDet__RfqId__72C60C4A" Association="MyApp_BitSolveModel.FK__tblRFQDet__RfqId__72C60C4A">
+            <End Role="tblRFQ" EntitySet="tblRFQs" />
+            <End Role="tblRFQDetail" EntitySet="tblRFQDetails" />
+          </AssociationSet>
+          <EntitySet Name="tblBidMasters" EntityType="MyApp_BitSolveModel.tblBidMaster" />
+          <EntitySet Name="tblBidDetails" EntityType="MyApp_BitSolveModel.tblBidDetail" />
+          <AssociationSet Name="FK_tblBidDetails_tblBidMaster" Association="MyApp_BitSolveModel.FK_tblBidDetails_tblBidMaster">
+            <End Role="tblBidMaster" EntitySet="tblBidMasters" />
+            <End Role="tblBidDetail" EntitySet="tblBidDetails" />
+          </AssociationSet>
+          <EntitySet Name="tblMainMenus" EntityType="MyApp_BitSolveModel.tblMainMenu" />
+          <EntitySet Name="tblSubMenus" EntityType="MyApp_BitSolveModel.tblSubMenu" />
+          <AssociationSet Name="FK__tblSubMen__MenuI__5224328E" Association="MyApp_BitSolveModel.FK__tblSubMen__MenuI__5224328E">
+            <End Role="tblMainMenu" EntitySet="tblMainMenus" />
+            <End Role="tblSubMenu" EntitySet="tblSubMenus" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="tblTypeMaster">
+          <Key>
+            <PropertyRef Name="TypeId" />
+          </Key>
+          <Property Name="TypeId" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+          <Property Type="Boolean" Name="IsDeleted" />
+        </EntityType>
+        <EntityType Name="tblCompany">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Type="Int32" Name="CompanyId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="City" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="State" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CountryId" />
+          <Property Type="String" Name="PinCode" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Website" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TelephoneNo" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MobileNo" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FaxNo" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="GSTIN" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BankName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BankAccountNo" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BankIFSCNo" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Password" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" />
+          <Property Type="Binary" Name="Logo" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="LogoPath" MaxLength="500" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblCountry">
+          <Key>
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Type="Int32" Name="CountryId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CountryName" MaxLength="100" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+          </Key>
+          <Property Type="Int32" Name="CustomerId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CustomerName" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CustomerCode" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="District" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PinCode" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="State" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Owner" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MobileNo1" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MobileNo2" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TelePhone1" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TelePhone2" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="VAT" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CST" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" />
+          <Property Type="Boolean" Name="IsDeleted" />
+        </EntityType>
+        <EntityType Name="tblItemMaster">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Type="Int32" Name="ItemId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ItemCode" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ItemName" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="TypeId" />
+          <Property Type="Int32" Name="UOMId" />
+          <Property Type="Decimal" Name="Price" Precision="18" Scale="2" />
+          <Property Type="String" Name="ManufacturedBy" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SerialNo" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BatchNo" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="HSN" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" />
+          <Property Type="Boolean" Name="IsDeleted" />
+        </EntityType>
+        <EntityType Name="tblSupplier">
+          <Key>
+            <PropertyRef Name="SupplierId" />
+          </Key>
+          <Property Type="Int32" Name="SupplierId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="SupplierName" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SupplierCode" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="District" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PinCode" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="State" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Owner" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MobileNo1" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="MobileNo2" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TelePhone1" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TelePhone2" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="VAT" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CST" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" />
+          <Property Type="Boolean" Name="IsDeleted" />
+        </EntityType>
+        <EntityType Name="tblUnitMaster">
+          <Key>
+            <PropertyRef Name="UnitId" />
+          </Key>
+          <Property Type="Int32" Name="UnitId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Unit" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" />
+          <Property Type="String" Name="abbreviation" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Type="Int32" Name="DepartmentId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblDesignation">
+          <Key>
+            <PropertyRef Name="DesignationId" />
+          </Key>
+          <Property Type="Int32" Name="DesignationId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblEmployee">
+          <Key>
+            <PropertyRef Name="EmpId" />
+          </Key>
+          <Property Type="Int64" Name="EmpId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="EmployeeNo" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FirstName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="DOB" Precision="0" />
+          <Property Type="Int32" Name="DesignationId" />
+          <Property Type="Int32" Name="DeptId" />
+          <Property Type="String" Name="MobileNo" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Fax" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Email" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" />
+          <Property Type="Boolean" Name="IsDeleted" />
+          <Property Type="String" Name="ImageName" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="Binary" Name="ImageInBytes" MaxLength="Max" FixedLength="false" />
+          <Property Type="String" Name="UserName" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="EmpPassword" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblTaxMaster">
+          <Key>
+            <PropertyRef Name="TaxId" />
+          </Key>
+          <Property Type="Int32" Name="TaxId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TaxName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="TaxValue" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="IsActive" />
+          <Property Type="Boolean" Name="IsDeleted" />
+        </EntityType>
+        <EntityType Name="tblChangePassword">
+          <Key>
+            <PropertyRef Name="ChPwdId" />
+          </Key>
+          <Property Type="Int64" Name="ChPwdId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="EmpId" Nullable="false" />
+          <Property Type="String" Name="OldPassword" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="NewPassword" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tblRoleMaster">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Type="Int32" Name="RoleId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="RoleName" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="UserRoleMaster">
+          <Key>
+            <PropertyRef Name="UserRoleId" />
+          </Key>
+          <Property Type="Int64" Name="UserRoleId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="UserId" Nullable="false" />
+          <Property Type="Int64" Name="RoleId" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblRFQDetail">
+          <Key>
+            <PropertyRef Name="RfqDetailsId" />
+          </Key>
+          <Property Type="Int64" Name="RfqDetailsId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="RfqId" Nullable="false" />
+          <Property Type="Int32" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="Description" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ManufacturedBy" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Qty" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="UnitId" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="TaxId" Nullable="false" />
+          <Property Type="Decimal" Name="SubTotal" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="isDeleted" />
+          <NavigationProperty Name="tblRFQ" Relationship="MyApp_BitSolveModel.FK__tblRFQDet__RfqId__72C60C4A" FromRole="tblRFQDetail" ToRole="tblRFQ" />
+        </EntityType>
+        <EntityType Name="tblRFQ">
+          <Key>
+            <PropertyRef Name="RfqId" />
+          </Key>
+          <Property Type="Int64" Name="RfqId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="RfqNo" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="RfqDate" Precision="0" />
+          <Property Type="DateTime" Name="OrderDate" Precision="0" />
+          <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DeliverTo" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ScheduleDate" Precision="0" />
+          <Property Type="DateTime" Name="BidValidUntil" Precision="0" />
+          <Property Type="Decimal" Name="TotalAmount" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="0" />
+          <Property Type="Int32" Name="createdBy" Nullable="false" />
+          <Property Type="Boolean" Name="isDeleted" />
+          <Property Type="DateTime" Name="ModifiedDate" Precision="0" />
+          <Property Type="Int32" Name="ModifiedBy" />
+          <Property Type="String" Name="SupplierId" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsEmailSent" />
+          <NavigationProperty Name="tblRFQDetails" Relationship="MyApp_BitSolveModel.FK__tblRFQDet__RfqId__72C60C4A" FromRole="tblRFQ" ToRole="tblRFQDetail" />
+        </EntityType>
+        <Association Name="FK__tblRFQDet__RfqId__72C60C4A">
+          <End Type="MyApp_BitSolveModel.tblRFQ" Role="tblRFQ" Multiplicity="1" />
+          <End Type="MyApp_BitSolveModel.tblRFQDetail" Role="tblRFQDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblRFQ">
+              <PropertyRef Name="RfqId" />
+            </Principal>
+            <Dependent Role="tblRFQDetail">
+              <PropertyRef Name="RfqId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblBidMaster">
+          <Key>
+            <PropertyRef Name="BidId" />
+          </Key>
+          <Property Type="Int64" Name="BidId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="BidNo" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="BidDate" Nullable="false" Precision="0" />
+          <Property Type="Int64" Name="RFQId" />
+          <Property Type="Int32" Name="BidLevelId" />
+          <Property Type="String" Name="supplierId" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="NetAmount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TotalAmount" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="0" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="ModifiedDate" Precision="0" />
+          <Property Type="Int32" Name="ModifiedBy" />
+          <Property Type="Boolean" Name="IsDeleted" />
+          <NavigationProperty Name="tblBidDetails" Relationship="MyApp_BitSolveModel.FK_tblBidDetails_tblBidMaster" FromRole="tblBidMaster" ToRole="tblBidDetail" />
+        </EntityType>
+        <EntityType Name="tblBidDetail">
+          <Key>
+            <PropertyRef Name="BidDetailId" />
+          </Key>
+          <Property Type="Int64" Name="BidDetailId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int64" Name="BidId" Nullable="false" />
+          <Property Type="Int64" Name="RfqDetailsId" Nullable="false" />
+          <Property Type="Int64" Name="ItemId" Nullable="false" />
+          <Property Type="String" Name="HSN" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ManufacturedBy" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Qty" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="UnitId" Nullable="false" />
+          <Property Type="Decimal" Name="Price" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="TaxId" />
+          <Property Type="Decimal" Name="SubTotal" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="isDeleted" />
+          <NavigationProperty Name="tblBidMaster" Relationship="MyApp_BitSolveModel.FK_tblBidDetails_tblBidMaster" FromRole="tblBidDetail" ToRole="tblBidMaster" />
+        </EntityType>
+        <Association Name="FK_tblBidDetails_tblBidMaster">
+          <End Type="MyApp_BitSolveModel.tblBidMaster" Role="tblBidMaster" Multiplicity="1" />
+          <End Type="MyApp_BitSolveModel.tblBidDetail" Role="tblBidDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBidMaster">
+              <PropertyRef Name="BidId" />
+            </Principal>
+            <Dependent Role="tblBidDetail">
+              <PropertyRef Name="BidId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="tblMainMenu">
+          <Key>
+            <PropertyRef Name="MenuId" />
+          </Key>
+          <Property Type="Int32" Name="MenuId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="MenuName" Nullable="false" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="isActive" />
+          <Property Type="String" Name="IconClass" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="ModifiedDate" Precision="3" />
+          <Property Type="Int32" Name="ModifiedBy" />
+          <NavigationProperty Name="tblSubMenus" Relationship="MyApp_BitSolveModel.FK__tblSubMen__MenuI__5224328E" FromRole="tblMainMenu" ToRole="tblSubMenu" />
+        </EntityType>
+        <EntityType Name="tblSubMenu">
+          <Key>
+            <PropertyRef Name="SubMenuId" />
+          </Key>
+          <Property Type="Int32" Name="SubMenuId" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MenuId" Nullable="false" />
+          <Property Type="String" Name="SubMenuName" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ControllerName" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ActionName" MaxLength="300" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="isActive" />
+          <Property Type="String" Name="IconClass" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedDate" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="ModifiedDate" Precision="3" />
+          <Property Type="Int32" Name="ModifiedBy" />
+          <NavigationProperty Name="tblMainMenu" Relationship="MyApp_BitSolveModel.FK__tblSubMen__MenuI__5224328E" FromRole="tblSubMenu" ToRole="tblMainMenu" />
+        </EntityType>
+        <Association Name="FK__tblSubMen__MenuI__5224328E">
+          <End Type="MyApp_BitSolveModel.tblMainMenu" Role="tblMainMenu" Multiplicity="1" />
+          <End Type="MyApp_BitSolveModel.tblSubMenu" Role="tblSubMenu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblMainMenu">
+              <PropertyRef Name="MenuId" />
+            </Principal>
+            <Dependent Role="tblSubMenu">
+              <PropertyRef Name="MenuId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MyApp_BitSolveModelStoreContainer" CdmEntityContainer="MyApp_BitSolveEntities">
+          <EntitySetMapping Name="tblTypeMasters">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblTypeMaster">
+              <MappingFragment StoreEntitySet="tblTypeMaster">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCompanies">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblCompany">
+              <MappingFragment StoreEntitySet="tblCompany">
+                <ScalarProperty Name="LogoPath" ColumnName="LogoPath" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="BankIFSCNo" ColumnName="BankIFSCNo" />
+                <ScalarProperty Name="BankAccountNo" ColumnName="BankAccountNo" />
+                <ScalarProperty Name="BankName" ColumnName="BankName" />
+                <ScalarProperty Name="GSTIN" ColumnName="GSTIN" />
+                <ScalarProperty Name="FaxNo" ColumnName="FaxNo" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="TelephoneNo" ColumnName="TelephoneNo" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCountries">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblCountry">
+              <MappingFragment StoreEntitySet="tblCountry">
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCustomers">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblCustomer">
+              <MappingFragment StoreEntitySet="tblCustomer">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CST" ColumnName="CST" />
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TelePhone2" ColumnName="TelePhone2" />
+                <ScalarProperty Name="TelePhone1" ColumnName="TelePhone1" />
+                <ScalarProperty Name="MobileNo2" ColumnName="MobileNo2" />
+                <ScalarProperty Name="MobileNo1" ColumnName="MobileNo1" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblItemMasters">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblItemMaster">
+              <MappingFragment StoreEntitySet="tblItemMaster">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="HSN" ColumnName="HSN" />
+                <ScalarProperty Name="BatchNo" ColumnName="BatchNo" />
+                <ScalarProperty Name="SerialNo" ColumnName="SerialNo" />
+                <ScalarProperty Name="ManufacturedBy" ColumnName="ManufacturedBy" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="UOMId" ColumnName="UOMId" />
+                <ScalarProperty Name="TypeId" ColumnName="TypeId" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ItemName" ColumnName="ItemName" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSuppliers">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblSupplier">
+              <MappingFragment StoreEntitySet="tblSupplier">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CST" ColumnName="CST" />
+                <ScalarProperty Name="VAT" ColumnName="VAT" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="TelePhone2" ColumnName="TelePhone2" />
+                <ScalarProperty Name="TelePhone1" ColumnName="TelePhone1" />
+                <ScalarProperty Name="MobileNo2" ColumnName="MobileNo2" />
+                <ScalarProperty Name="MobileNo1" ColumnName="MobileNo1" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="PinCode" ColumnName="PinCode" />
+                <ScalarProperty Name="District" ColumnName="District" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="SupplierCode" ColumnName="SupplierCode" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblUnitMasters">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblUnitMaster">
+              <MappingFragment StoreEntitySet="tblUnitMaster">
+                <ScalarProperty Name="abbreviation" ColumnName="abbreviation" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Unit" ColumnName="Unit" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDepartments">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblDepartment">
+              <MappingFragment StoreEntitySet="tblDepartment">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDesignations">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblDesignation">
+              <MappingFragment StoreEntitySet="tblDesignation">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblEmployees">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblEmployee">
+              <MappingFragment StoreEntitySet="tblEmployee">
+                <ScalarProperty Name="EmpPassword" ColumnName="EmpPassword" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ImageInBytes" ColumnName="ImageInBytes" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Fax" ColumnName="Fax" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="DeptId" ColumnName="DeptId" />
+                <ScalarProperty Name="DesignationId" ColumnName="DesignationId" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="EmployeeNo" ColumnName="EmployeeNo" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblTaxMasters">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblTaxMaster">
+              <MappingFragment StoreEntitySet="tblTaxMaster">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="TaxValue" ColumnName="TaxValue" />
+                <ScalarProperty Name="TaxName" ColumnName="TaxName" />
+                <ScalarProperty Name="TaxId" ColumnName="TaxId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblChangePasswords">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblChangePassword">
+              <MappingFragment StoreEntitySet="tblChangePassword">
+                <ScalarProperty Name="NewPassword" ColumnName="NewPassword" />
+                <ScalarProperty Name="OldPassword" ColumnName="OldPassword" />
+                <ScalarProperty Name="EmpId" ColumnName="EmpId" />
+                <ScalarProperty Name="ChPwdId" ColumnName="ChPwdId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRoleMasters">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblRoleMaster">
+              <MappingFragment StoreEntitySet="tblRoleMaster">
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserRoleMasters">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.UserRoleMaster">
+              <MappingFragment StoreEntitySet="UserRoleMaster">
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="UserRoleId" ColumnName="UserRoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRFQDetails">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblRFQDetail">
+              <MappingFragment StoreEntitySet="tblRFQDetails">
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="TaxId" ColumnName="TaxId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ManufacturedBy" ColumnName="ManufacturedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="RfqId" ColumnName="RfqId" />
+                <ScalarProperty Name="RfqDetailsId" ColumnName="RfqDetailsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblRFQs">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblRFQ">
+              <MappingFragment StoreEntitySet="tblRFQ">
+                <ScalarProperty Name="IsEmailSent" ColumnName="IsEmailSent" />
+                <ScalarProperty Name="SupplierId" ColumnName="SupplierId" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="createdBy" ColumnName="createdBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="BidValidUntil" ColumnName="BidValidUntil" />
+                <ScalarProperty Name="ScheduleDate" ColumnName="ScheduleDate" />
+                <ScalarProperty Name="DeliverTo" ColumnName="DeliverTo" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="RfqDate" ColumnName="RfqDate" />
+                <ScalarProperty Name="RfqNo" ColumnName="RfqNo" />
+                <ScalarProperty Name="RfqId" ColumnName="RfqId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBidMasters">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblBidMaster">
+              <MappingFragment StoreEntitySet="tblBidMaster">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="NetAmount" ColumnName="NetAmount" />
+                <ScalarProperty Name="supplierId" ColumnName="supplierId" />
+                <ScalarProperty Name="BidLevelId" ColumnName="BidLevelId" />
+                <ScalarProperty Name="RFQId" ColumnName="RFQId" />
+                <ScalarProperty Name="BidDate" ColumnName="BidDate" />
+                <ScalarProperty Name="BidNo" ColumnName="BidNo" />
+                <ScalarProperty Name="BidId" ColumnName="BidId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblBidDetails">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblBidDetail">
+              <MappingFragment StoreEntitySet="tblBidDetails">
+                <ScalarProperty Name="isDeleted" ColumnName="isDeleted" />
+                <ScalarProperty Name="SubTotal" ColumnName="SubTotal" />
+                <ScalarProperty Name="TaxId" ColumnName="TaxId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ManufacturedBy" ColumnName="ManufacturedBy" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="HSN" ColumnName="HSN" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+                <ScalarProperty Name="RfqDetailsId" ColumnName="RfqDetailsId" />
+                <ScalarProperty Name="BidId" ColumnName="BidId" />
+                <ScalarProperty Name="BidDetailId" ColumnName="BidDetailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblMainMenus">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblMainMenu">
+              <MappingFragment StoreEntitySet="tblMainMenu">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IconClass" ColumnName="IconClass" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="MenuName" ColumnName="MenuName" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSubMenus">
+            <EntityTypeMapping TypeName="MyApp_BitSolveModel.tblSubMenu">
+              <MappingFragment StoreEntitySet="tblSubMenu">
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="IconClass" ColumnName="IconClass" />
+                <ScalarProperty Name="isActive" ColumnName="isActive" />
+                <ScalarProperty Name="ActionName" ColumnName="ActionName" />
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="SubMenuName" ColumnName="SubMenuName" />
+                <ScalarProperty Name="MenuId" ColumnName="MenuId" />
+                <ScalarProperty Name="SubMenuId" ColumnName="SubMenuId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

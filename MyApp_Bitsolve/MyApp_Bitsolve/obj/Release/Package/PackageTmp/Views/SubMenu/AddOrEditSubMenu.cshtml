@@ -1,0 +1,65 @@
+﻿@model BusinessEntities.SubMenuVM
+    
+
+
+@using (Html.BeginForm("AddOrEditSubMenu", "SubMenu",FormMethod.Post, new {id="frmsubmenu", onsubmit = "return Submit(this);" }))
+{
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.SubMenuId, new { @class = "control-label col-md-2",@name="SubMenuId" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MenuId, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.MenuId, (IEnumerable<SelectListItem>)ViewBag.mainMenuList, "Select Menu", new { @class = "form-control",@name="MenuId" })
+                @Html.ValidationMessageFor(model => model.MenuId, "", new { @class = "text-danger" })
+            </div>
+             @Html.LabelFor(model => model.SubMenuName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.SubMenuName, new { HtmlAttributes = new { @class = "form-control",@name="SubMenuName" } })
+                @Html.ValidationMessageFor(model => model.SubMenuName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ControllerName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ControllerName, new { HtmlAttributes = new { @class = "form-control",@name="ControllerName" } })
+                @Html.ValidationMessageFor(model => model.ControllerName, "", new { @class = "text-danger" })
+            </div>
+             @Html.LabelFor(model => model.ActionName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ActionName, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ActionName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+             @Html.LabelFor(model => model.IconClass, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.IconClass, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IconClass, "", new { @class = "text-danger" })
+            </div>
+             @Html.LabelFor(model => model.isActive, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.CheckBox("IsActive", new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.isActive, "", new { @style = "color:red" })
+            </div>
+        </div>
+
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-info float-right"><i class="fa fa-plus mr-2"></i>Save SubMenu</button>
+                <button type="reset" class="btn btn-warning float-right" style="margin-right: 10px"><i class="fa fa-refresh" style="margin-right: 5px"></i>Reset</button>
+
+            </div>
+        </div>
+    </div>
+}
+

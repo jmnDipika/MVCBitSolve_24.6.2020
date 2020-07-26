@@ -1,0 +1,92 @@
+﻿@model IEnumerable<BusinessEntities.SupplierVM>
+
+<div class="tabe table-responsive">
+<table id="SupplierTable" class="table table-condensed table-striped table-bordered" style="width: 100%">
+    <thead class="card-header alert-info">
+        <tr>
+            <th>Sr. No.</th>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.SupplierId)
+            </th>
+            <th style="width: 50px">Supplier Code
+            </th>
+            <th style="width: 300px">Supplier_Name
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.District)
+            </th>
+            <th style="width: 100px">Pin Code
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.Owner)
+            </th>
+            <th style="width: 100px">Mobile No1
+            </th>
+
+            <th style="width: 300px">
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+
+            <th style="width: 50px">
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th style="width: 80px">Actions</th>
+           
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            int count = 1;
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>@count</td>
+                <td class="hidden">
+                    @Html.DisplayFor(modelItem => item.SupplierId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierCode)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierName)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.District)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PinCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MobileNo1)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(m => item.IsActive)
+                </td>
+                <td class="col-md-2">
+                    <a onclick="OpenPopUp('@Url.Action("AddOrEditSupplier", "SupplierMaster", new { id = item.SupplierId })')" style="color:white"  class=" btn btn-success"><i class="fa fa-edit"></i></a>
+                    <a onclick="Delete(@item.SupplierId)" class="btn btn-warning" style="color:white"><i class="fa fa-trash"></i></a>
+                </td>
+                
+            </tr>
+                count++;
+            }
+        }
+    </tbody>
+</table>

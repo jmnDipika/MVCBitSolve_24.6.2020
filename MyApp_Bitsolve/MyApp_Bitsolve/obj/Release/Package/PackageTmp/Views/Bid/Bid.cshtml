@@ -1,0 +1,353 @@
+﻿@{
+    ViewBag.Title = "Bid";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/Template/plugins/fontawesome-free/css/fontawesome.min.css" rel="stylesheet" />
+<link href="~/Content/Template/plugins/select2/css/select2.min.css" rel="stylesheet" />
+
+@section scripts{
+
+    <script src="~/Content/Template/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Content/Template/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Template/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Content/Template/plugins/select2/js/select2.full.min.js"></script>
+    @*    <script src="~/Content/Template/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
+    @*@Scripts.Render("~/Bundles/jqueryval")*@
+
+    <script>
+        $(document).ready(function () {
+            var month = new Array(12);
+            month[0] = "Jan"; month[1] = "Feb"; month[2] = "Mar"; month[3] = "Apr";
+            month[4] = "May"; month[5] = "Jun"; month[6] = "Jul"; month[7] = "Aug";
+            month[8] = "Sep"; month[9] = "Oct"; month[10] = "Nov"; month[11] = "Dec";
+            $('#DivDataTable').load("/Bid/BidList");
+            $(document).on("change", "#RFQId", function (e, ddlTax) {
+                e.preventDefault();
+                if ($('#supplierId').val() == "") {
+                    ValidateControl($('#supplierId'), "Supplier is required.");
+                } else {
+                    var id = $('#RFQId').val();
+                    var opt = GetTaxList(ddlTax);
+                    $.ajax({
+                        url: "/Bid/GetRFQDetById",
+                        type: "GET",
+                        data: { id: id, suppid: $('#supplierId').val() },
+                        success: function (resp) {
+                            if (resp != null) {
+                                var parsedRFQDate = new Date(parseInt(resp.RFQDate.substr(6)));
+                                var parseOrderDate = new Date(parseInt(resp.OrderDate.substr(6)));
+                                var parseBVU = new Date(parseInt(resp.BidValidUntil.substr(6)));
+                                var parseScheduleDate = new Date(parseInt(resp.ScheduleDate.substr(6)));
+
+                                $('#RFQDate').val(parsedRFQDate.getDate() + '-' + month[parsedRFQDate.getMonth()] + '-' + parsedRFQDate.getFullYear());
+                                $('#SupplierName').html(resp.SupplierName);
+                                $('#OrderDate').html(parseOrderDate.getDate() + '-' + month[parseOrderDate.getMonth()] + '-' + parseOrderDate.getFullYear());
+                                $('#DeliverTo').html(resp.DeliverTo);
+                                $('#BidValidUntill').html(parseBVU.getDate() + '-' + month[parseBVU.getMonth()] + '-' + parseBVU.getFullYear());
+                                $('#ScheduleDate').html(parseScheduleDate.getDate() + '-' + month[parseScheduleDate.getMonth()] + '-' + parseScheduleDate.getFullYear());
+                                $('#CompanyName').html(resp.CompanyName);
+                                $('#SupplierCode').html(resp.SupplierCode);
+                                $('#suppDt').show();
+                                debugger;
+                                var tbody = $('<tbody/>');
+                                $.each(resp._BidDetailsVMList, function (i, val) {
+                                    var row = "";
+                                    row += '<tr><td class="hidden">' + val.RfqDetailsId + '</td>';
+                                    row += '<td class="hidden">' + val.ItemId + '</td>';
+                                    row += '<td><label>' + val.ItemName + '</label></td>';
+                                    row += '<td><input type="text" class="form-control txthsn"/></td>';
+                                    row += '<td><label class="Description">' + val.Description + '</label></td>';
+                                    row += '<td><input type="text" value="' + val.ManufacturedBy + '" class="form-control ManufacturedBy" /></td>';
+                                    row += '<td><input type="text" value="' + val.Qty + '" class="form-control qty" /></td>';
+                                    row += '<td class="hidden">' + val.UnitId + '</td>';
+                                    row += '<td>' + val.Unit + '</td>';
+                                    row += '<td><input type="text" value="' + val.Price + '" class="form-control price" /></td>';
+                                    row += '<td class="hidden">' + val.TaxId + '</td>';
+                                    row += '<td><select class="form-control ddltax"><option>Select Tax</option>' + opt + '</select></td>';
+                                    row += '<td>' + val.SubTotal + '</td></tr>';
+                                    $('#BidDetailsList tbody').remove();
+                                    tbody.append(row);
+                                });
+
+                                $('#BidDetailsList').append(tbody);
+
+                                $('#BidDetailsList tr').find('.ddltax option').filter(function () {
+                                    var setvalue = $(this).closest('tr').find('td').eq(10).html();
+                                    if ($(this).val() == setvalue.trim())
+                                    { return true; }
+                                }).prop('selected', true);
+                                CalculateNetAmt();
+                            }
+                        },
+                        error: function (resp) { console.log(resp); }
+                    });
+                }
+            });
+
+            $(document).on("keyup", ".qty", function () {
+                var qty = 0, price = 0, subtotal = 0;
+                qty = $(this).closest('tr').find('.qty').val();
+                price = $(this).closest('tr').find('.price').val();
+                subtotal = CalculateSubTotal($('.ddltax').val().trim(), qty, price);
+                $(this).closest('tr').find('td').eq(12).html(subtotal);
+                CalculateNetAmt();
+            });
+
+            $(document).on("keyup", ".price", function () {
+                var qty = 0, price = 0, subtotal = 0;
+                qty = $(this).closest('tr').find('.qty').val();
+                price = $(this).closest('tr').find('.price').val();
+                subtotal = CalculateSubTotal($('.ddltax').val().trim(), qty, price);
+                $(this).closest('tr').find('td').eq(12).html(subtotal);
+                CalculateNetAmt();
+            });
+
+            $(document).on("change", ".ddltax", function () {
+                var qty = 0, price = 0, subtotal = 0;
+                qty = $(this).closest('tr').find('.qty').val();
+                price = $(this).closest('tr').find('.price').val();
+                subtotal = CalculateSubTotal($('.ddltax').val().trim(), qty, price);
+                $(this).closest('tr').find('td').eq(12).html(subtotal);
+                CalculateNetAmt();
+            });
+
+            $(document).on("change keyup", "#SupplierName", function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/Bid/GetRFQNosBySupp',
+                    type: 'GET',
+                    data: { suppId: $("#supplierId").val() },
+                    success: function (res) {
+                        if (res != null) {
+                            $('#suppDt').hide();
+                            $('#BidDetailsList tbody').remove();
+                            $("#RFQId option").remove();
+                            $("#RFQId").append("<option>Select RFQ NO</option>");
+                            $.each(res, function (i, val) {
+                                $("#RFQId").append('<option Value=' + val.Value + '>' + val.Text + '</option>');
+                            });
+
+                        }
+                    },
+                    error: function (res) { console.log(res); }
+                });
+            });
+
+            $(document).on("click", "#btnsubmitBid", function (e) {
+                e.preventDefault();
+                var bidDetailsListArr = [];
+                $('#BidDetailsList tbody tr').each(function () {
+                    bidDetailsListArr.push({
+                        BidDetailId: 0,
+                        BidId: 0,
+                        RfqDetailsId: $(this).closest('tr').find('td').eq(0).html(),
+                        ItemId: $(this).closest('tr').find('td').eq(1).html(),
+                        HSN: $(this).closest('tr').find('.txthsn').val(),
+                        Description: $(this).closest('tr').find('.Description').text(),
+                        ManufacturedBy: $(this).closest('tr').find('.ManufacturedBy').val(),
+                        Qty: $(this).closest('tr').find('.qty').val(),
+                        UnitId: $(this).closest('tr').find('td').eq(7).html(),
+                        Price: $(this).closest('tr').find('.price').val(),
+                        TaxId: $(this).closest('tr').find('.ddltax option:selected').val(),
+                        SubTotal: $(this).closest('tr').find('td').eq(12).html(),
+                    });
+                });//end of arr
+
+                var _BidVM = JSON.stringify({
+                    BidNo: $('#BidNo').val(),
+                    BidDate: $('#BidDate').val(),
+                    supplierId: $('#supplierId').val(),
+                    RFQId: $('#RFQId').val(),
+                    NetAmount: $('#NetAmount').val(),
+                    TotalAmount: $('#TotalAmount').val(),
+                    _BidDetailsVMList: bidDetailsListArr
+                });
+
+                $.when(SaveBid(_BidVM)).then(function (response) { console.log(response); })
+                    .fail(function (response) { console.log(response); });
+            });
+
+        });//end of document ready
+
+        $(document).ajaxComplete(function () {
+            $('#dataTable').DataTable();
+            //-----Supplier autocomplete----------
+            $('#SupplierName').autocomplete({
+                source: function (req, res) {
+                    $.ajax({
+                        type: 'GET',
+                        url: '/Bid/AutocompleteSupplierList',
+                        data: { supp: $('#SupplierName').val() },
+                        success: function (result) {
+
+                            res($.map(result, function (supp) {
+                                return { lable: supp.Value, value: supp.Text };
+                            }));
+                        },
+
+                    });
+                },
+                select: function (event, ui) {
+                    $('#SupplierName').val(ui.item.value);
+                    $('#supplierId').val(ui.item.lable);
+                    return false;
+                },
+            });
+        });
+
+        function Valid()
+        {
+            var isValid = false;
+
+            isValid= ValidateControl($('#BidNo'), "Bid No is required.");
+            isValid=ValidateControl($('#supplierId'), "Supplier is required.");
+            isValid=ValidateControl($('#RFQId'), "RFQ No is required.");
+            return isValid;
+        }
+
+        function SaveBid(data) {
+            var isValid = Valid()
+            if (isValid) {
+                $.ajax({
+                        url: '/Bid/AddOrEditBid',
+                        type: 'POST',
+                        data: data,
+                        contentType: "application/json; charset=utf-8",
+                        //dataType: 'json',
+                        cache: false,
+                        success: function (res) {
+                            if (res.success) {
+                                $.notify(res.message, { globalPosition: 'top center', className: 'success' });
+                                $('#DivDataTable').load("/Bid/BidList");
+                            }
+                            else {
+                                $('#DivDataTable').html(res);
+                            }
+                        },
+                        error: function (res) { console.log(res); }
+                    })
+            }
+
+        }
+
+        function CalculateSubTotal(taxid, qty, price) {
+            var subtotal = 0, percenttax = 0;
+            $.ajax({
+                async: false,
+                url: '/RFQ/GetTaxValue',
+                type: 'GET',
+                data: { taxid: taxid },
+                success: function (res) {
+                    if (res != null) {
+                        debugger
+                        if ((!isNaN(qty) && $.trim(qty).length != 0) && (!isNaN(price) && $.trim(price).length != 0)) {
+                            debugger
+                            subtotal = parseFloat(qty) * parseFloat(price);
+                            percenttax = parseFloat(subtotal) * (parseFloat(res) / 100);
+                        }
+
+                    }
+                },
+                error: function (res) { console.log(res); }
+            });
+            return parseFloat(subtotal) + parseFloat(percenttax);
+        }
+
+        function CalculateNetAmt() {
+            var qty = 0, price = 0, subtotal = 0, netAmt = 0, totalAmt = 0;
+            $('#BidDetailsList tr').each(function () {
+                qty = $(this).closest('tr').find('.qty').val();
+                price = $(this).closest('tr').find('.price').val();
+
+                if ((!isNaN(qty) && $.trim(qty).length != 0) && (!isNaN(price) && $.trim(price).length != 0)) {
+                    subtotal = parseFloat(qty) * parseFloat(price);
+                    netAmt += parseFloat(subtotal);
+                }
+                if (!isNaN($(this).closest('tr').find('td').eq(12).html())) {
+                    totalAmt += parseFloat($(this).closest('tr').find('td').eq(12).html());
+                }
+            });
+            $('#NetAmount').val(netAmt.toFixed(2));
+            $('#TotalAmount').val(totalAmt.toFixed(2));
+        }
+
+        function GetTaxList(ddlTax) {
+            $.ajax({
+                async: false,
+                url: '/Bid/GetTaxList',
+                type: 'GET',
+                success: function (res) {
+                    if (res != null) {
+                        debugger;
+                        $.each(res, function (i, val) {
+                            ddlTax += '<option Value=' + val.Value + '>' + val.Text + '</option>';
+                        });
+                    }
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            });
+            return ddlTax;
+        }
+
+        function OpenPopUp(url) {
+            popup = $('#DivDataTable');
+            $.get(url).done(function (res) {
+                popup.html(res);
+                if ( $(popup).find('#BidId').val() == 0)
+                {
+                    $(popup).find('#suppDt').hide(); 
+                }
+               
+            });
+        }//end of popup
+
+        function DeleteBid(id) {
+            if (confirm("Do you want to delete this record ?")) {
+                $.ajax({
+                    url: '/Bid/DeleteBid/' + id,
+                    type: 'POST',
+                    success: function (res) {
+                        if (res.success) {
+                            $.notify(res.message, { globalPosition: "top center", className: "danger" });
+                            $('#DivDataTable').load("/Bid/BidList");
+                        }
+                    },
+                    error: function (res) { console.log(res); }
+                });
+            }
+        }
+
+        //validations 
+        function ValidateControl(Control, message) {
+            if (Control.val() == "") {
+                Control.siblings('span').html(message).show();
+                return false;
+            }
+            else {
+                Control.siblings('span').html('').hide();
+                return true
+            }
+
+        }
+
+
+    </script>
+}
+
+<div class="card">
+    <div class="card-header" style="background-color: #16578e">
+        <h4 style="color: white">Bid</h4>
+    </div>
+    <div class="card-body">
+        <div id="DivDataTable" style="width: 100%"></div>
+    </div>
+</div>

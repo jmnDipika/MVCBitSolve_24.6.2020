@@ -1,0 +1,153 @@
+﻿@model BusinessEntities.LoginVM
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/Template/plugins/fontawesome-free/css/all.min.css">
+    <link href="~/CustomCSS/LoginCSS.css" rel="stylesheet" />
+    <link href="~/CustomCSS/LoaderCSS.css" rel="stylesheet" />
+</head>
+<body>
+    <div id="loader" style="display: none; width: 100%; height: 100%; background-color: gray; z-index: 99999; position: absolute; opacity: 0.5; top: 0%; left: 0%;">
+        <div class="loader"></div>
+    </div>
+
+
+    <div class="card">
+        <div class="container">
+
+            <div class="row">
+                <div class="well well-sm">
+                    <h1>Login <span class="fa fa-user pull-right"></span></h1>
+                    <small>Sign in to start your session</small>
+
+                </div>
+            </div>
+            @using (Html.BeginForm("LoginForm", "Login", FormMethod.Post, new { id = "loginForm" }))
+            {
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group ">
+                        @Html.LabelFor(model => model.UserName, new { @class = "control-label col-md-3 " })
+                        <div class="col-md-9">
+
+                            @Html.EditorFor(model => model.UserName, new { HtmlAttributes = new { @class = "form-control", @placeholder = "Username" } })
+                            <span style="margin-top: 10px"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Password, new { HtmlAttributes = new { @class = "form-control", @placeholder = "Password" } })
+                            <span style="margin-top: 10px"></span>
+                        </div>
+                    </div>
+
+                   
+
+                    <div class="form-group">
+                        <div class="col-md-9 pull-right">
+                            @Html.CheckBoxFor(model => model.remember, new { HtmlAttributes = new { @class = "form-control" } })
+                            <label>Remember Me</label>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group col-md-4 pull-right">
+                        <button type="submit" class="btn btn-info btn-block"><i class="fa fa-login"></i>Login</button>
+                    </div>
+
+                    <div class="col-md-12">
+                        @Html.ActionLink("Forgot Password ? ", "", "", new { @id = "forgetPwdLink", @style = "float:right" })
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+    <script src="~/Content/Template/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="~/Content/Template/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ajaxStart(function () {
+            $("#loader").show();
+        });
+
+        $(document).ajaxComplete(function () {
+            //$("#loader").css("display", "none");
+        });
+        $(document).ready(function () {
+
+            $('#UserName').keyup(function () {
+                //ValidateControl($('#UserName'));
+            });
+
+            $('#Password').keyup(function () {
+                // ValidateControl($('#Password'));
+            });
+
+
+            $('#loginForm').submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: '/Login/LoginForm',
+                    type: 'POST',
+                    data: $('#loginForm').serialize(),
+                    beforeSend: function () {
+
+                    },
+                    success: function (response) {
+                        if (!response.success) {
+                            $("#loader").hide();
+                            afterSuccessfase($('#UserName'));
+                            afterSuccessfase($('#Password'));
+                        }
+                        else {
+                            afterSuccesstrue($('#UserName'));
+                            afterSuccesstrue($('#Password'));
+                            window.location.replace(response.url);
+                        }
+                    }
+                });
+                return false;
+            });
+
+        });
+        function ValidateControl(Control) {
+            if (Control.val() == "") {
+                afterSuccessfase(Control);
+                return false;
+            }
+            else {
+                afterSuccesstrue(Control);
+                return true
+            }
+
+        }
+
+        function afterSuccessfase(Control) {
+            Control.parent().parent().addClass('has-error has-feedback');
+            Control.siblings('span').addClass('fa fa-exclamation-circle form-control-feedback');
+        }
+        function afterSuccesstrue(Control) {
+            Control.parent().parent().removeClass('has-error');
+            Control.parent().parent().addClass('has-success has-feedback');
+            Control.siblings('span').removeClass('fa fa-exclamation-circle');
+            Control.siblings('span').addClass('fa fa-check-circle form-control-feedback');
+        }
+
+    </script>
+</body>
+</html>
+

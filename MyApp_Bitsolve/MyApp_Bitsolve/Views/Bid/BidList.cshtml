@@ -1,0 +1,91 @@
+﻿@model IEnumerable<BusinessEntities.BidMasterVM>
+
+<a class="btn btn-info" style="color:white;float:right" onclick="OpenPopUp('@Url.Action("AddOrEditBid", "Bid")')"><i class="fa fa-plus mr-2"></i>Add New</a>
+<br />
+<hr />
+<div class="table table-responsive">
+  
+<table id="dataTable" class="table table-condensed table-striped table-bordered" style="width: 100%">
+    <thead class="card-header alert-info">
+        <tr>
+            <th style="width: 50px">
+                @Html.DisplayNameFor(model => model.BidNo)
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.BidDate)
+            </th>
+            <th style="width: 50px">
+                @Html.DisplayNameFor(model => model.RFQNO)
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.RFQDate)
+            </th>
+            <th style="width: 300px">
+                @Html.DisplayNameFor(model => model.SupplierName)
+            </th>
+            <th style="width: 50px">
+                @Html.DisplayNameFor(model => model.SupplierCode)
+            </th>
+
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.NetAmount)
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.TotalAmount)
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+
+            <th style="width: 100px">Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.BidNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BidDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFQNO)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.RFQDate)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierCode)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.NetAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TotalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                </td>
+
+                <td>
+                    <a class="btn btn-success" onclick="OpenPopUp('@Url.Action("AddOrEditBid", "Bid", new { id = item.BidId })')" style="color:white"><i class="fa fa-edit"></i></a>
+                    <a class="btn btn-warning" onclick="DeleteBid(@item.BidId);" style="color:white"><i class="fa fa-trash"></i></a>
+                    @*<a class="btn btn-primary" onclick="ShowBidDetails(@item.BidId);" style="color:white"><i class="glyphicon glyphicon-list"></i></a>*@
+                </td>
+            </tr>
+            }
+        }
+    </tbody>
+</table>
+  </div>

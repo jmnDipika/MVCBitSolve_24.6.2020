@@ -1,0 +1,110 @@
+﻿@model BusinessEntities.ItemMasterVM
+
+@using (Html.BeginForm("AddOrEditItem", "ItemMaster", FormMethod.Post, new { enctype = "multipart/form-data", id = "formItemMaster", onsubmit = "return Submit(this);" }))
+{
+    
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+
+        <div class="form-group row">
+            @Html.HiddenFor(model => model.ItemId, new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.ItemCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ItemCode, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ItemCode, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.ItemName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ItemName, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ItemName, "", new { @style = "color:red" })
+            </div>
+
+        </div>
+
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Description, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Description, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @style = "color:red" })
+            </div>
+            @Html.Label("Type", new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.TypeId, (IEnumerable<SelectListItem>)ViewBag.Types, "Select Type", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TypeId, "", new { @style = "color:red" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            @Html.Label("UOM", new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.UOMId, (IEnumerable<SelectListItem>)ViewBag.Units, "Select Unit", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UOMId, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.Price, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Price, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Price, "", new { @style = "color:red" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.ManufacturedBy, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ManufacturedBy, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ManufacturedBy, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.SerialNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.SerialNo, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SerialNo, "", new { @style = "color:red" })
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.BatchNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BatchNo, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BatchNo, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.HSN, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.HSN, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HSN, "", new { @style = "color:red" })
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.CheckBox("IsActive", new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @style = "color:red" })
+            </div>
+            <div class="col-md-6">
+            </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-info float-right"><i class="fa fa-plus mr-2"></i>Save Item</button>
+                <button type="reset" class="btn btn-warning float-right" style="margin-right: 10px"><i class="fa fa-refresh" style="margin-right: 5px"></i>Reset</button>
+
+            </div>
+        </div>
+
+    </div>
+}
+
+
+

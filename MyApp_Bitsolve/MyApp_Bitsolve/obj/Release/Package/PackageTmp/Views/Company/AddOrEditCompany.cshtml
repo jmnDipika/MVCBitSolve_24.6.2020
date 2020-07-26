@@ -1,0 +1,214 @@
+﻿@model BusinessEntities.CompanyVM
+@{
+    ViewBag.Title = "AddOrEditCompany";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+@*<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+<script src="~/Scripts/notify.min.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>*@
+@Scripts.Render("~/Bundles/jqueryval")
+
+<script>
+    $(document).ready(function () {
+
+        $('#Companyform').submit(function (e) {
+            e.preventDefault();
+            if ($('#file').val() == '') {
+                alert("Please select Image file");
+                return false;
+            }
+            else {
+                var formData = new FormData(this);
+                var file = $('#file')[0];
+                formData.append('file', file.files[0]);
+                $.ajax({
+                    url: $('#Companyform').attr("action"),
+                    type: "POST",
+                    data: formData,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        if (res.success) {
+                            alert("Saved Successfully..!");
+                            $.notify(res.message, { globalPosition: "top center", className: "success" });
+                        }
+
+                    },
+                    error: function (res) { alert("Error!"); }
+                });
+            }
+        });
+    });
+    function PreviewLogo(FileUploader, FilePath) {
+        if (FileUploader.files != null && FileUploader.files[0] != null) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#LogoPath').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(FileUploader.files[0]);
+        }
+    }
+
+</script>
+
+<div class="card">
+    <div class="card-header" style="background-color: #16578e">
+        <h4 style="color: white">Company Creation</h4>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+            @using (Html.BeginForm("AddOrEditCompany", "Company", FormMethod.Post, new { enctype = "multipart/form-data", id = "Companyform" }))
+            {
+                // @Html.AntiForgeryToken()
+    
+                <div class="form-horizontal">
+
+                    @Html.ValidationSummary(true)
+
+                    <div class="form-group">
+                        @Html.HiddenFor(model => model.CompanyId, new { @class = "control-label col-md-2" })
+                    </div>
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.CompanyName, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.CompanyName, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.CompanyName, "", new { @style = "color:red" })
+                        </div>
+                        @Html.LabelFor(model => model.City, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.City, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.City, "", new { @style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.State, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.State, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.State, "", new { @style = "color:red" })
+                        </div>
+                        @Html.LabelFor(model => model.CountryId, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.DropDownListFor(model => model.CountryId, (IEnumerable<SelectListItem>)ViewBag.Country, "Select Country", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CountryId, "", new { @style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.PinCode, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.PinCode, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PinCode, "", new { @style = "color:red" })
+                        </div>
+                        @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Address, "", new { @style = "color:red" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Email, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @style = "color:red" })
+                        </div>
+                        @Html.LabelFor(model => model.Website, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Website, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Website, "", new { @style = "color:red" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.TelephoneNo, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.TelephoneNo, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.TelephoneNo, "", new { @style = "color:red" })
+                        </div>
+                        @Html.LabelFor(model => model.MobileNo, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.MobileNo, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.MobileNo, "", new { @style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.FaxNo, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.FaxNo, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FaxNo, "", new { @style = "color:red" })
+                        </div>
+                        @Html.LabelFor(model => model.GSTIN, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.GSTIN, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.GSTIN, "", new { @style = "color:red" })
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.BankName, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.BankName, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BankName, "", new { @style = "color:red" })
+                        </div>
+                        @Html.LabelFor(model => model.BankAccountNo, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.BankAccountNo, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BankAccountNo, "", new { @style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.BankIFSCNo, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.BankIFSCNo, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.BankIFSCNo, "", new { @style = "color:red" })
+                        </div>
+                        @Html.LabelFor(model => model.Password, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.EditorFor(model => model.Password, new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @style = "color:red" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        @Html.LabelFor(model => model.Logo, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            <img src="@Url.Content(Model.LogoPath)" id="LogoPath"  style="height:100px;width:100px"/>
+                            <input type="file" name="file" id="file" onchange="PreviewLogo(this,document.getElementById(LogoPath))" />
+                            @Html.ValidationMessageFor(model => model.LogoPath, "", new { @style = "color:red" })
+                        </div>
+                        @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
+                        <div class="col-md-4">
+                            @Html.CheckBox("IsActive", new { HtmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.IsActive, "", new { @style = "color:red" })
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button type="submit" class="btn btn-info float-right"><i class="fa fa-plus mr-2"></i>Save Company</button>
+                            <button type="reset" class="btn btn-warning float-right" style="margin-right: 10px"><i class="fa fa-refresh" style="margin-right: 5px"></i>Reset</button>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </p>
+
+    </div>
+</div>
+
+
+
+

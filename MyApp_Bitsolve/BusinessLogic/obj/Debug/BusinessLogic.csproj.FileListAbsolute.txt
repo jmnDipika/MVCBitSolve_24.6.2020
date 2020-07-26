@@ -1,0 +1,4 @@
+F:\BitSolve\MyApp_Bitsolve\BusinessLogic\bin\Debug\BusinessLogic.dll
+F:\BitSolve\MyApp_Bitsolve\BusinessLogic\bin\Debug\BusinessLogic.pdb
+F:\BitSolve\MyApp_Bitsolve\BusinessLogic\obj\Debug\BusinessLogic.dll
+F:\BitSolve\MyApp_Bitsolve\BusinessLogic\obj\Debug\BusinessLogic.pdb

@@ -1,0 +1,21 @@
+﻿img.zoom {
+        width: 50px;
+        height: 50px;
+        -webkit-transition: all .2s ease-in-out;
+        -moz-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+    }
+
+    .transition {
+        -webkit-transform: scale(3);
+        -moz-transform: scale(3);
+        -o-transform: scale(3);
+        -ms-transform: scale(3);
+        transform: scale(3);
+    }
+
+    img {
+    cursor: zoom-in;
+
+}

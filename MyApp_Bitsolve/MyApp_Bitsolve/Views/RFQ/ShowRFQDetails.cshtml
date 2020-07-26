@@ -1,0 +1,187 @@
+﻿@model BusinessEntities.RFQVM
+<div>
+    <h4>RFQ Detais</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RfqNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RfqNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RfqDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RfqDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SupplierName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SupplierName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrderDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliverTo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DeliverTo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ScheduleDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ScheduleDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BidValidUntil)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BidValidUntil)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TotalAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.createdByName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.createdByName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsEmailSent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsEmailSent)
+        </dd>
+
+    </dl>
+    <div>
+         <table id="" class="table table-condensed table-striped table-bordered" style="width: 100%">
+        <thead class="card-header alert-warning">
+            <tr>
+                <th style="width: 30px">Sr. No.</th>
+               
+                <th style="width: 100px">
+                   Item Name
+                </th>		 				
+                <th style="width: 100px">
+                   Description
+                </th>
+
+                <th style="width: 200px">
+                    Manufactured By
+                </th>
+                <th style="width: 100px">
+                    Qty
+                </th>
+
+                <th style="width: 100px">
+                    Unit
+                </th>
+
+                <th style="width: 100px">
+                    Price
+                </th>
+                <th style="width: 100px">
+                   Tax
+                </th>
+
+                <th style="width: 100px">
+                   Sub Total
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                int count = 1;
+                foreach (var item in Model._RFQDetailsVMList)
+                {
+                <tr>
+                    <td>@count</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ItemName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ManufacturedBy)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Qty)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UnitName )
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                       @Html.DisplayFor(modelItem => item.TaxName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SubTotal)
+                    </td>
+                </tr>
+                    count++;
+                }
+            }
+        </tbody>
+        </table>
+    </div>
+</div>
+<p>
+     @Ajax.ActionLink("Back to RFQ List", "RFQList", "RFQ", new AjaxOptions() { 
+           UpdateTargetId = "DivDataTable", HttpMethod = "GET",  InsertionMode = InsertionMode.Replace })
+</p>

@@ -1,0 +1,68 @@
+﻿@model IEnumerable<BusinessEntities.MainMenuVM>
+
+<div class="table table-responsive">
+    <table id="dataTable" class="table table-condensed table-striped table-bordered" style="width: 100%">
+        <thead class="card-header alert-info">
+            <tr>
+                <th style="width: 100px">Sr.No.</th>
+                <th style="width: 500px">
+                    @Html.DisplayNameFor(model => model.MenuName)
+                </th>
+                <th style="width: 200px">
+                    @Html.DisplayNameFor(model => model.IconClass)
+                </th>
+                <th style="width: 200px">
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>
+                <th style="width: 200px">
+                    @Html.DisplayNameFor(model => model.CreatedByname)
+                </th>
+                <th style="width: 200px">
+                    @Html.DisplayNameFor(model => model.ModifiedDate)
+                </th>
+                <th style="width: 200px">
+                    @Html.DisplayNameFor(model => model.ModifiedByname)
+                </th>
+                <th style="width: 300px">Actions</th>
+            </tr>
+        </thead>
+       @* <tbody>
+
+            @if (Model != null)
+            {
+                int count = 1;
+                foreach (var item in Model)
+                {
+                <tr>
+                    <td>@count</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MenuName)
+                    </td>
+                    <td style="width: 200px">
+                        <i class="@item.IconClass"></i>
+                        @Html.DisplayFor(model => item.IconClass)
+                    </td>
+                    <td style="width: 200px">
+                        @Html.DisplayFor(model => item.CreatedDate)
+                    </td>
+                    <td style="width: 200px">
+                        @Html.DisplayFor(model => item.CreatedByname)
+                    </td>
+                    <td style="width: 200px">
+                        @Html.DisplayFor(model => item.ModifiedDate)
+                    </td>
+                    <td style="width: 200px">
+                        @Html.DisplayFor(model => item.ModifiedByname)
+                    </td>
+                    <td>
+                        <a onclick="OpenPopUp('@Url.Action("AddOrEditMainMenu", "MainMenu", new { id = item.MenuId })')" style="color:white"  class=" btn btn-success btn-sm"><i class="fa fa-edit"></i></a>
+                        <a onclick="Delete(@item.MenuId)" style="color:white"  class="btn btn-warning btn-sm"><i class="fa fa-trash"></i></a>
+
+                    </td>
+                </tr>
+                    count++;
+                }
+            }
+        </tbody>*@
+    </table>
+</div>

@@ -1,0 +1,50 @@
+﻿@model BusinessEntities.MainMenuVM
+
+
+@using (Html.BeginForm("AddOrEditMainMenu", "MainMenu", FormMethod.Post, new { name = "frmMainMenu", onsubmit = "return Submit(this);" }))
+{
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.MenuId, new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group" id="menunamegroup">
+            @Html.LabelFor(model => model.MenuName, new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.MenuName, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MenuName, "", new { @style = "color:red" })
+                <span class="invalid-feedback" >The Menu Name field is required.</span>
+            </div>
+        </div>
+        <div class="form-group" id="iconclassgroup">
+            @Html.LabelFor(model => model.IconClass, new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.IconClass, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IconClass, "", new { @style = "color:red" })
+                <div  class="invalid-feedback">The Icon Class field is required.</div>
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.isActive, new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.CheckBox("isActive", new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.isActive, "", new { @style = "color:red" })
+                @*<span class="invalid-feedback">  Please enter a isActive.</span>*@
+            </div>
+        </div>
+
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-info float-right"><i class="fa fa-plus mr-2"></i>Save Menu</button>
+                <button type="reset" class="btn btn-warning float-right" style="margin-right: 10px"><i class="fa fa-refresh" style="margin-right: 5px"></i>Reset</button>
+
+            </div>
+        </div>
+    </div>
+}
+
+

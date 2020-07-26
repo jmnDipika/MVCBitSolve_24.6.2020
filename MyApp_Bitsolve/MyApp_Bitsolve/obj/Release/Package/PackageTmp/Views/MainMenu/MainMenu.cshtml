@@ -1,0 +1,192 @@
+﻿@{
+    ViewBag.Title = "MainMenu";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/Template/plugins/fontawesome-free/css/fontawesome.min.css" rel="stylesheet" />
+@section scripts{
+
+    <script src="~/Content/Template/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Content/Template/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Template/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    @Scripts.Render("~/Bundles/jqueryval")
+
+    <script>
+
+
+        $(document).ready(function () {
+            $('#dataTable').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "ajax": {
+                    "url": "/MainMenu/MainMenuList",
+                    "type": "POST",
+                    "datatype": "json"
+                },
+                "columns": [
+                    {
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1
+                        },
+                        orderable: false
+                    },
+                    { data: "MenuName", name: "MenuName", 'autowidth': "true" },
+                    { data: "IconClass", name: "IconClass", 'autowidth': "true" },
+
+                     {
+                         data: "CreatedDate", name: "CreatedDate",
+                         render: function (data, type, row) {
+                             if (type === "sort" || type === "type") {
+                                 return data;
+                             }
+                             return moment(data).format("MM-DD-YYYY HH:mm");
+                         }
+                     },
+                    { data: "CreatedByname", name: "CreatedByname" },
+                    {
+                        data: "ModifiedDate", name: "ModifiedDate",
+                        render: function (data, type, row) {
+                            if (type === "sort" || type === "type") {
+                                return data;
+                            }
+                            return moment(data).format("MM-DD-YYYY HH:mm");
+                        }
+                    },
+                    { data: "ModifiedByname", name: "ModifiedByname" },
+                    {
+                        data: "MenuId", render: function (id) {
+                            return '<a onclick="OpenPopUp(' + id + ')" style="color :white" class="btn btn-success"><i class="fa fa-edit"></i></a> <a onclick="Delete(' + id + ')" style="color :white" class="btn btn-warning"><i class="fa fa-trash"></i></a>'
+                        },
+                        orderable: false
+                    }
+                ],
+                order: [[1, 'asc']],
+                language: {
+                    processing: "Processing ....Please Wait!",
+                    infoEmpty: "No records available",
+                },
+                lengthMenu: [5, 10, 20, 50, 100, 200, 500],
+            });
+
+        });
+
+
+        function OpenPopUp(id) {
+            var url;
+            if (id != null || id != 0) {
+                url = "/MainMenu/AddOrEditMainMenu/" + id;
+            }
+            else {
+                url = "/MainMenu/AddOrEditMainMenu/";
+            }
+            popup = $('#popupDiv');
+            $.get(url).done(function (res) {
+                popup.html(res),
+            popup.dialog({
+                autoOpen: true,
+                width: 500,
+                title: "Main Menu",
+                resizable: false,
+                overlay: { backgroundColor: "#000", opacity: 0.5 },
+                modal: true,
+
+            });
+            });
+        }
+
+        function VaidateForm() {
+            var isvalid = false;
+            $('#menunamegroup .invalid-feedback').hide()
+            $('#menunamegroup').removeClass('has-error');
+            $('#iconclassgroup .invalid-feedback').hide();
+            $('#iconclassgroup').removeClass('has-error');
+
+            if ($('#MenuName').val() != '' && $('#IconClass').val() != '') {
+                isvalid = true;
+            }
+            if ($('#MenuName').val() == '') {
+                $('#menunamegroup').addClass('has-error');
+                $('#menunamegroup .invalid-feedback').show();
+            }
+
+            if ($('#IconClass').val() == '') {
+                $('#iconclassgroup').addClass('has-error');
+                $('#iconclassgroup .invalid-feedback').show();
+            }
+            return isvalid;
+        }
+
+        function Submit(form) {
+            var isvalid = VaidateForm();
+            if (isvalid) {
+                $.ajax({
+                    type: "POST",
+                    url: form.action,
+                    data: $(form).serialize(),
+                    cache: false,
+                }).done(function (response) {
+                    if (response.success) {
+                        popup.dialog('close');
+                        $.notify(response.message, { globalPosition: "top center", className: "success" });
+                        $("#dataTable").DataTable().ajax.reload(null, false);
+                    } else {
+                        $('#popupDiv').html(response);
+                    }
+
+                });
+            }
+            return false;
+        }
+
+        function Delete(id) {
+            if (confirm("Do you want to delete this record ?")) {
+                $.ajax({
+                    url: '/MainMenu/DeleteMainMenu/' + id,
+                    type: 'POST',
+                    success: function (response) {
+                        if (response.success) {
+                            $.notify(response.message, { globalPosition: "top center", className: "danger" });
+                            $('#datTable').DataTable().ajax.reload(null, false);
+                        }
+                    },
+                    error: function (response) { $.notify(response.message, { globalPosition: "top center", className: "danger" }); }
+                });
+            }
+        }
+
+        function myin()
+        {
+            alert()
+        }
+    </script>
+
+
+
+
+}
+
+
+
+<div class="card">
+    <div class="card-header" style="background-color: #16578e">
+        <h4 style="color: white">Main Menu List</h4>
+    </div>
+    <div class="card-body">
+        <p class="card-text">
+           
+
+            <a class="btn btn-info" style="color:white;float:right" onclick="OpenPopUp('@Url.Action("AddOrEditMainMenu", "MainMenu")')"><i class="fa fa-plus mr-2"></i>Add New</a>
+            <br />
+            <hr />
+            <div id="popupDiv" style='overflow: hidden'></div>
+            <div id="DivDataTable" style="width: 100%">@{Html.RenderPartial("MainMenuList"); }</div>
+
+        </p>
+    </div>
+</div>
+
+

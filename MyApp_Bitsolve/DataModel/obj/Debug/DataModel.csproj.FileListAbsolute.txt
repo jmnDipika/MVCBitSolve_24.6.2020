@@ -1,0 +1,7 @@
+F:\BitSolve\MyApp_Bitsolve\DataModel\bin\Debug\DataModel.dll.config
+F:\BitSolve\MyApp_Bitsolve\DataModel\bin\Debug\DataModel.dll
+F:\BitSolve\MyApp_Bitsolve\DataModel\bin\Debug\DataModel.pdb
+F:\BitSolve\MyApp_Bitsolve\DataModel\bin\Debug\EntityFramework.dll
+F:\BitSolve\MyApp_Bitsolve\DataModel\bin\Debug\EntityFramework.xml
+F:\BitSolve\MyApp_Bitsolve\DataModel\obj\Debug\DataModel.dll
+F:\BitSolve\MyApp_Bitsolve\DataModel\obj\Debug\DataModel.pdb

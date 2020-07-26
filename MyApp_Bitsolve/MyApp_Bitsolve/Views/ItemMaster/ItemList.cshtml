@@ -1,0 +1,96 @@
+﻿@model IEnumerable<BusinessEntities.ItemMasterVM>
+
+
+
+<table id="ItemTable" class="table table-condensed table-striped table-bordered" style="width: 100%">
+    <thead class="card-header alert-info">
+        <tr>
+            <th>Sr.No.</th>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.ItemId)
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.ItemCode)
+            </th>
+            <th style="width: 200px">
+                @Html.DisplayNameFor(model => model.ItemName)
+            </th>
+            <th style="width: 200px">
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+
+            <th style="width: 50px">
+                @Html.DisplayNameFor(model => model.TypeName)
+            </th>
+            <th style="width: 50px">
+                @Html.DisplayNameFor(model => model.UOM)
+            </th>
+
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.ManufacturedBy)
+            </th>
+
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.HSN)
+            </th>
+            <th style="width: 100px">
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th style="width: 100px">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            int count = 1;
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>@count</td>
+                <td class="hidden">
+                    @Html.DisplayFor(modelItem => item.ItemId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ItemName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TypeName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UOM)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ManufacturedBy)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.HSN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    <a onclick="OpenPopUp('@Url.Action("AddOrEditItem", "ItemMaster", new { id = item.ItemId })')" style="color:white"  class=" btn btn-success"><i class="fa fa-edit"></i></a>
+                    <a onclick="Delete(@item.ItemId)" style="color:white"  class="btn btn-warning"><i class="fa fa-trash"></i></a>
+                </td>
+            </tr>
+                count++;
+            }
+        }
+    </tbody>
+</table>
+  </div>

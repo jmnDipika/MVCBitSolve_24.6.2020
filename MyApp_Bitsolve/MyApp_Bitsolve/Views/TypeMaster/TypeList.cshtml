@@ -1,0 +1,51 @@
+﻿@using PagedList.Mvc;
+@using PagedList;
+@model IPagedList<BusinessEntities.TypeMasterVM>
+
+<div class ="table table-responsive">
+<table id="dataTable" class="table table-condensed table-striped table-bordered" style="width: 100%">
+
+    <thead class="card-header alert-info">
+        <tr>
+            <th>Sr.No.</th>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.First().TypeId)
+            </th>
+            <th style="width: 900px">
+                @Html.DisplayNameFor(model => model.First().Type)
+            </th>
+
+            <th style="width: 200px">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            int count = 1;
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>@count</td>
+                <td class="hidden">
+                    @Html.DisplayFor(modelItem => item.TypeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+
+                <td>
+                    <a onclick="OpenPopUp('@Url.Action("AddOrEditType", "TypeMaster", new { id = item.TypeId })')" style="color:white"  class=" btn btn-success"><i class="fa fa-edit"></i></a>
+                    <a onclick="Delete(@item.TypeId)" style="color:white"  class="btn btn-warning"><i class="fa fa-trash"></i></a>
+
+                </td>
+            </tr>
+                count++;
+            }
+        }
+    </tbody>
+</table>
+</div>
+
+<div id="divProcessing" class="processingButton" style="display: none;">
+    <img width="31" height="31" alt="" class="LoadingImage" src="~/Images/ajax-loader-round.gif" />
+</div>

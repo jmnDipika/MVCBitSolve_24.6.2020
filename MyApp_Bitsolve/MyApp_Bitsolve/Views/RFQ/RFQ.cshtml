@@ -1,0 +1,231 @@
+﻿@{
+    ViewBag.Title = "RFQ";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<link href="~/Content/css/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/Template/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+<link href="~/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+<link href="~/Content/Template/plugins/fontawesome-free/css/fontawesome.min.css" rel="stylesheet" />
+<link href="~/Content/Template/plugins/select2/css/select2.min.css" rel="stylesheet" />
+
+@section scripts{
+
+    <script src="~/Content/Template/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Content/Template/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/Template/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Content/Template/plugins/select2/js/select2.full.min.js"></script>
+
+    @Scripts.Render("~/Bundles/jqueryval")
+
+
+    <script>
+
+        $(document).ready(function () {
+            $('#DivDataTable').load("/RFQ/RFQList");
+            $(document).on("click", "#btnsubmitRFQ", function (e) {
+                e.preventDefault();
+                var rfqDetailsArr = [];
+                $('#RfqDetailsTable tbody tr').each(function () {
+                    if ($('#RfqDetailsTable tbody').length > 0) {
+                        var RfqDetailsId = $(this).find('td').eq(0).html();
+                        if (RfqDetailsId == '' || RfqDetailsId == 'undefined') {
+                            RfqDetailsId = 0;
+                        }
+                        else {
+                            RfqDetailsId = $(this).find('td').eq(0).html();
+                        }
+                        rfqDetailsArr.push({
+                            RfqDetailsId: RfqDetailsId,
+                            ItemId: $(this).find('td').eq(1).html(),
+                            UnitId: $(this).find('td').eq(2).html(),
+                            TaxId: $(this).find('td').eq(3).html(),
+
+                            ItemName: $(this).find('td').eq(4).html(),
+                            Description: $(this).find('td').eq(5).html(),
+                            ManufacturedBy: $(this).find('td').eq(6).html(),
+                            Qty: $(this).find('td').eq(7).html(),
+                            UnitName: $(this).find('td').eq(8).html(),
+                            Price: $(this).find('td').eq(9).html(),
+                            TaxName: $(this).find('td').eq(10).html(),
+                            SubTotal: $(this).find('td').eq(11).html()
+                        });
+                    }
+                });//end of details arr
+
+                var RFQVM = JSON.stringify({
+                    RfqId: $('#RfqId').val(),
+                    RfqNo: $('#RfqNo').val(),
+                    RfqDate: $('#RfqDate').val(),
+                    SupplierId: $('#hdnSupplierIds').val(),
+                    hdnSupplierIds: $('#hdnSupplierIds').val(),
+                    OrderDate: $('#OrderDate').val(),
+                    CompanyName: $('#CompanyName').val(),
+                    DeliverTo: $('#DeliverTo').val(),
+                    ScheduleDate: $('#ScheduleDate').val(),
+                    BidValidUntil: $('#BidValidUntil').val(),
+                    TotalAmount: $('#TotalAmount').val(),
+                    _RFQDetailsVMList: rfqDetailsArr
+                });
+
+                $.when(SaveRfq(RFQVM)).then(function (response) { console.log(response); })
+                    .fail(function (response) { console.log(response); });
+
+            });//end of submit
+
+            $(document).on("click", "#btnRFQList", function (e) {
+                e.preventDefault();
+                $('#DivDataTable').load("/RFQ/RFQList");
+            });//end of rfq list
+
+
+
+        });//end of document ready
+
+        $(document).ajaxComplete(function () {
+            $('#dataTable').DataTable();
+            //$('[data-toggle="tooltip"]').tooltip();
+            //------select 2---------
+            $('.supplierList').select2();
+            $('#SupplierId').change(function () {
+                $('#hdnSupplierIds').val($(this).val());
+            });
+
+            //---------autocomplete for item----
+            $('#ItemNames').autocomplete({
+                source: function (request, response) {
+                    $.ajax({
+                        url: '/RFQ/AutoCompleteItemList',
+                        type: 'GET',
+                        data: { itemname: $('#ItemNames').val() },
+                        success: function (result) {
+                            response($.map(result, function (item) {
+                                return {
+                                    lable: item.Value, value: item.Text
+                                };
+                            }));
+                        },
+
+                    });
+                },
+                select: function (event, ui) {
+                    $('#ItemNames').val(ui.item.value);
+                    $('#ItemId').val(ui.item.lable);
+                    return false;
+                },
+            });
+
+        });//endof ajax complete
+
+
+        function SendMail(url) {
+            $.ajax({
+                type: "POST",
+                url: url,
+                success: function (response) {
+                    $('.alert').show();
+                    $('.alert').html(response.message);
+                },
+                error: function (response) {
+                    $('.alert').show();
+                    $('.alert').html(response);
+                }
+            });
+        }
+
+        function SaveRfq(data) {
+            $.ajax({
+                type: "POST",
+                url: '/RFQ/AddOrEditRFQ',
+                data: data,
+                datatype: 'json',
+                contentType: 'application/json',
+                processData: false,
+                cache: false,
+                success: function (response) {
+                    if (response.success) {
+                        $.notify(response.message, { globalPosition: "top center", className: "success" });
+                        // $('#DivDataTable').load("/RFQ/RFQList");
+                        $('#btnsubmitRFQ').attr('disabled', true); debugger;
+                        $('#btnsendRFQ').attr('disabled', false);
+                    } else {
+                        $('#DivDataTable').html(response);
+                        $('#DivDataTable').find('#btnsendRFQ').attr('disabled', true);
+                        var result = $('#DivDataTable').find('#hdnSupplierIds').val();
+                        var idArr = [];
+                        idArr = result.split(',');
+                        $('#DivDataTable').find('#SupplierId').val(idArr).trigger('change');
+                    }
+                },
+                error: function (response) {
+                    console.log(response);
+                    $.notify(response.message, { globalPosition: "top center", className: "danger" });
+                },
+            });
+            return false;
+        }
+
+        function OpenPopUp(url) {
+
+            popup = $('#DivDataTable');
+
+            $.get(url).done(function (res) {
+                debugger; $('.alert').hide();
+                popup.html(res);
+                $(popup).find('#btnsendRFQ').attr('disabled', true);
+                var result = $(popup).find('#hdnSupplierIds').val();
+                var idArr = [];
+                idArr = result.split(',');
+                $(popup).find('#SupplierId').val(idArr).trigger('change');
+
+            });
+        }//end of popup
+
+        function Delete(id) {
+            if (confirm("Do you want to delete this rfq")) {
+                $.ajax({
+                    url: "/RFQ/DeleteRFQ",
+                    type: "POST",
+                    data: { id: id },
+                    success: function (res) {
+                        if (res.success) {
+                            $.notify(response.message, { globalPosition: "top center", className: "success" });
+                            $('#DivDataTable').load("/RFQ/RFQList");
+                        }
+
+                    },
+                    error: function (res) {
+                        console.log(res);
+                    }
+                });
+            }
+        }
+
+        function ShowRFQDetais(url) {
+            $.ajax({
+                url: url,
+                type: "GET",
+                success: function (data) {
+                    $('#DivDataTable').html(data);
+                },
+                error: function (res) {
+                    console.log(res)
+
+                }
+            });
+        }
+      
+    </script>
+}
+<div class="card">
+    <div class="card-header" style="background-color: #16578e">
+        <h4 style="color: white">RFQ</h4>
+    </div>
+    <div class="card-body">
+        <div class="alert alert-warning" style="display: none"><strong></strong></div>
+       
+        <div id="DivDataTable" style="width: 100%"></div>
+
+    </div>
+</div>

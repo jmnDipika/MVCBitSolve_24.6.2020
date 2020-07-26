@@ -1,0 +1,137 @@
+﻿@model BusinessEntities.CustomerVM
+
+@using (Html.BeginForm("AddOrEditCustomer", "Customer", FormMethod.Post, new { enctype = "multipart/form-data", id = "customerForm", onsubmit = "return Submit(this);" }))
+{
+    // @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+      
+        @Html.ValidationSummary(true)
+
+        <div class="form-group ">
+            @Html.HiddenFor(model => model.CustomerId, new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.CustomerCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.CustomerCode, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CustomerCode, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.CustomerName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.CustomerName, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CustomerName, "", new { @style = "color:red" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Address, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Address, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Address, "", new { @style = "color:red" })
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.District, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.District, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.District, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.PinCode, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.PinCode, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PinCode, "", new { @style = "color:red" })
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.State, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.State, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.State, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.Owner, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Owner, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Owner, "", new { @style = "color:red" })
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+
+            @Html.LabelFor(model => model.TelePhone1, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.TelePhone1, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TelePhone1, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.MobileNo1, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.MobileNo1, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MobileNo1, "", new { @style = "color:red" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.TelePhone2, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.TelePhone2, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TelePhone2, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.MobileNo2, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.MobileNo2, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MobileNo2, "", new { @style = "color:red" })
+            </div>
+
+        </div>
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.VAT, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.VAT, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.VAT, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.CST, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.CST, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CST, "", new { @style = "color:red" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Email, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.Email, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @style = "color:red" })
+            </div>
+            @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.CheckBox("IsActive", new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @style = "color:red" })
+            </div>
+        </div>
+        <hr />
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-info float-right"><i class="fa fa-plus"></i> Save Customer</button>
+                <button type="reset" class="btn btn-warning float-right" style="margin-right: 10px"><i class="fa fa-refresh"></i> Reset</button>
+            </div>
+        </div>
+
+
+    </div>
+}
+

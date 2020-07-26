@@ -1,0 +1,50 @@
+﻿body {
+}
+
+ html, body {
+            height: 100%;
+            width: 100%;
+            background-color: #9cb0c3;
+        }
+
+        .container {
+            width: 60%;
+            margin: 0 auto;
+            max-width: 700px;
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 20%;
+            top: 20%;
+            background-color: #e6f3fa;
+            border: 1px solid #ddd;
+            flex-wrap: wrap;
+            overflow: auto;
+            border-radius: 5px;
+        }
+
+        .card {
+            background-color: #fff;
+            width: 80%;
+            height: 80%;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-top: 5%;
+            margin-bottom: 10%;
+            position: fixed;
+            border-radius: 25px;
+        }
+
+
+        .well,
+        .well small {
+            background-color: #2484bc;
+            color: #fff;
+        }
+
+        input[type="checkbox"] {
+            -webkit-appearance: checkbox;
+            -moz-appearance: checkbox;
+            display: inline-block;
+            width: auto;
+        }

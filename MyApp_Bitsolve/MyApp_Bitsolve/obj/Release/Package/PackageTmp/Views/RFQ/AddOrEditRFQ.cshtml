@@ -1,0 +1,99 @@
+﻿@model BusinessEntities.RFQVM
+
+
+@using (Html.BeginForm("AddOrEditRFQ", "RFQ", FormMethod.Post, new { id = "formRFQ" }))
+{
+  
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.RfqId, new { @class = "control-label col-md-2" })
+            @Html.HiddenFor(model => model.hdnSupplierIds, new { @class = "control-label col-md-2" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.RfqNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.RfqNo, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.RfqNo, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.RfqDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.RfqDate, new { HtmlAttributes = new { @class = "form-control", @Value = System.DateTime.Now.ToShortDateString(), @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.RfqDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SupplierId, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.SupplierId, (IEnumerable<SelectListItem>)ViewBag.supplierList, new { @class = "form-control supplierList", @multiple = "multiple" })
+                @Html.ValidationMessageFor(model => model.SupplierId, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.OrderDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.OrderDate, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.OrderDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CompanyName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.CompanyName, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CompanyName, "", new { @class = "text-danger" })
+            </div>
+
+            @Html.LabelFor(model => model.DeliverTo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextAreaFor(model => model.DeliverTo, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.DeliverTo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ScheduleDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.ScheduleDate, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ScheduleDate, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.BidValidUntil, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BidValidUntil, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BidValidUntil, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TotalAmount, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.TotalAmount, new { HtmlAttributes = new { @class = "form-control", @readonly="readonly", @Value="0.00" } })
+                @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        @*----------------------------------------------------------*@
+        <hr />
+        <div class="card">
+            @Html.Partial("_RFQDetailsVM", Model)
+        </div>
+        <hr />
+        @*----------------------------------------------------------*@
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                  <button type="button" id="btnsendRFQ" onclick="SendMail('@Url.Action("SendRFQ", "RFQ", new { id = Model.RfqId})');" class="btn btn-primary float-right">Mail RFQ</button>
+                <button type="button" id="btnsubmitRFQ" class="btn btn-info float-right mr-2">Save Changes</button>
+                <button type="button" id="btnRFQList" class="btn btn-warning float-right" style="margin-right: 10px">RFQ List</button>
+            </div>
+        </div>
+    </div>
+}
+
+
+

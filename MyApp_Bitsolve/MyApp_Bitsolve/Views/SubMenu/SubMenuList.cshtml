@@ -1,0 +1,47 @@
+﻿@model IEnumerable<BusinessEntities.SubMenuVM>
+
+<div class="table table-responsive">
+    <table id="dataTable" class="table table-condensed table-striped table-bordered" style="width: 100%">
+        <thead class="card-header alert-info">
+            <tr>
+                <th style="width: 100px">Sr. No
+                </th>
+               <th>
+                    @Html.DisplayNameFor(model => model.SubMenuId)
+                </th>
+                <th style="width: 200px">
+                    @Html.DisplayNameFor(model => model.MenuName)
+                </th>
+                <th style="width: 200px">
+                    @Html.DisplayNameFor(model => model.SubMenuName)
+                </th>
+                <th style="width: 200px">
+                    @Html.DisplayNameFor(model => model.ControllerName)
+                </th>
+                <th style="width: 200px">
+                    @Html.DisplayNameFor(model => model.ActionName)
+                </th>
+                <th style="width: 80px">
+                    @Html.DisplayNameFor(model => model.isActive)
+                </th>
+                <th style="width: 420px">
+                    @Html.DisplayNameFor(model => model.IconClass)
+                </th>
+               @* <th style="width: 100px">
+                    @Html.DisplayNameFor(model => model.CreatedByname)
+                </th>
+                <th style="width: 100px">
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                </th>*@
+                <th style="width: 100px">
+                    @Html.DisplayNameFor(model => model.ModifiedByname)
+                </th>
+                <th style="width: 100px">
+                    @Html.DisplayNameFor(model => model.ModifiedDate)
+                </th>
+                <th style="width: 200px">Actions</th>
+            </tr>
+        </thead>
+       <tbody></tbody>
+    </table>
+</div>

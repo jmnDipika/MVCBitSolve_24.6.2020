@@ -1,0 +1,9 @@
+F:\BitSolve\MyApp_Bitsolve\BusinessEntities\bin\Release\BusinessEntities.dll
+F:\BitSolve\MyApp_Bitsolve\BusinessEntities\bin\Release\BusinessEntities.pdb
+F:\BitSolve\MyApp_Bitsolve\BusinessEntities\obj\Release\BusinessEntities.csprojResolveAssemblyReference.cache
+F:\BitSolve\MyApp_Bitsolve\BusinessEntities\obj\Release\BusinessEntities.dll
+F:\BitSolve\MyApp_Bitsolve\BusinessEntities\obj\Release\BusinessEntities.pdb
+F:\BitSolve\MyApp_Bitsolve\BusinessEntities\bin\Release\System.Web.Http.dll
+F:\BitSolve\MyApp_Bitsolve\BusinessEntities\bin\Release\System.Net.Http.Formatting.dll
+F:\BitSolve\MyApp_Bitsolve\BusinessEntities\bin\Release\System.Web.Http.xml
+F:\BitSolve\MyApp_Bitsolve\BusinessEntities\bin\Release\System.Net.Http.Formatting.xml

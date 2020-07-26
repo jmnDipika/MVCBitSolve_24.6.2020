@@ -1,0 +1,272 @@
+﻿@model BusinessEntities.RFQVM
+<link href="~/Content/css/fontawesome.min.css" rel="stylesheet" />
+<script>
+    $(document).ready(function () {
+        $('.error').hide();
+
+        $('#btnAddToList').click(function (e) {
+            var isValid = validateDetails();;
+            if (isValid) {
+                var row = "";
+                row += '<tr>';
+                row += '<td class="hidden">' + $('#RfqDetailsId').val() + '</td>';
+                row += '<td class="hidden">' + $('#ItemId').val() + '</td>';
+                row += '<td class="hidden">' + $('#UnitId option:selected').val() + '</td>';
+                row += '<td class="hidden">' + $('#TaxId option:selected').val() + '</td>';
+
+                row += '<td>' + $('#ItemNames').val() + '</td>';
+                row += '<td>' + $('#Description').val() + '</td>';
+                row += '<td>' + $('#ManufacturedBy').val() + '</td>';
+                row += '<td>' + $('#Qty').val() + '</td>';
+                row += '<td>' + $('#UnitId option:selected').text() + '</td>';
+                row += '<td>' + $('#Price').val() + '</td>';
+                row += '<td>' + $('#TaxId option:selected').text() + '</td>';
+                row += '<td>' + $('#SubTotal').val() + '</td>';
+                row += '<td><a class="text-danger remove"><i class="fa fa-trash"></i></a></td></tr>';
+                $('#RfqDetailsTable tbody').append(row);
+                ClearRFQ_Details();
+                calculateTotal();
+            }
+        });
+
+        $(document).on("click", ".remove", function () {
+            $(this).closest('tr').remove();
+        });
+        $(document).on("keyup", "#Qty", function () {
+            CalculateSubTotal();
+            CalculateTax($('#TaxId').val());
+        });
+        $(document).on("keyup", "#Price", function () {
+            CalculateSubTotal();
+            CalculateTax($('#TaxId').val());
+
+        });
+
+        $(document).on("change", "#TaxId", function (e) {
+            CalculateTax($(this).val());
+        });
+
+    });//end of document
+
+    function calculateTotal() {
+        var totalamt = 0, subtotal = 0;
+        $('#RfqDetailsTable tbody tr').each(function () {
+            subtotal = $(this).find('td').eq(11).html();
+            if ((subtotal.trim() > 0 || !isNaN(subtotal)) && (!isNaN(totalamt) || totalamt.trim() > 0)) {
+                totalamt = (parseFloat(totalamt) + parseFloat(subtotal)).toFixed(2);
+            }
+            else { }
+        });
+        $('#TotalAmount').val(totalamt);
+
+    }
+
+    function validateDetails() {
+        var validate = true;
+        if ($('#ItemNames').val() == '' || $('#ItemNames').val() == null || $('#ItemNames').val() == 'undefined') {
+            $('#ItemNames').siblings('.error').show();
+            validate = false;
+        }
+        else {
+            $('#ItemNames').siblings('.error').hide();
+        }
+        if ($('#Description').val() == '' || $('#Description').val() == null || $('#Description').val() == 'undefined') {
+            $('#Description').siblings('.error').show();
+            validate = false;
+        }
+        else {
+            $('#Description').siblings('.error').hide();
+        }
+
+        if ($('#ManufacturedBy').val() == '' || $('#ManufacturedBy').val() == null || $('#ManufacturedBy').val() == 'undefined') {
+            $('#ManufacturedBy').siblings('.error').show();
+            validate = false;
+        }
+        else {
+            $('#ManufacturedBy').siblings('.error').hide();
+        }
+
+        if ($('#Qty').val() == '' || $('#Qty').val() == null || $('#Qty').val() == 'undefined') {
+            $('#Qty').siblings('.error').show();
+            validate = false;
+        }
+        else {
+            $('#Qty').siblings('.error').hide();
+        }
+
+        if ($('#Price').val() == '' || $('#Price').val() == null || $('#Price').val() == 'undefined') {
+            $('#Price').siblings('.error').show();
+            validate = false;
+        }
+        else {
+            $('#Price').siblings('.error').hide();
+        }
+
+        if ($('#UnitId').val() > 0) {
+            $('#UnitId').siblings('.error').hide();
+        }
+        else {
+            $('#UnitId').siblings('.error').show();
+            validate = false;
+        }
+
+        if ($('#TaxId').val() > 0) {
+            $('#TaxId').siblings('.error').hide();
+        }
+        else {
+            $('#TaxId').siblings('.error').show();
+            validate = false;
+        }
+        return validate;
+    }
+
+    function ClearRFQ_Details() {
+        $('#ItemNames').val('');
+        $('#Description').val('');
+        $('#ManufacturedBy').val('');
+        $('#Qty').val('');
+        $('#UnitId').val('');
+        $('#Price').val('');
+        $('#TaxId').val('');
+        $('#SubTotal').val('');
+
+    }
+
+    function CalculateSubTotal() {
+        if ($('#Qty').val() > 0 && $('#Price').val() > 0) {
+            var total = parseFloat($('#Qty').val()) * parseFloat($('#Price').val());
+            $('#SubTotal').val(total.toFixed(2));
+        }
+        else {
+            $('#SubTotal').val('');
+        }
+    }
+
+    function CalculateTax(taxid) {
+        $.ajax({
+            url: '/RFQ/GetTaxValue',
+            type: 'GET',
+            data: { taxid: taxid },
+            success: function (res) {
+                if (res != null) {
+                    if ((!isNaN($('#Qty').val()) && $.trim($('#Qty').val()).length != 0) && (!isNaN($('#Price').val()) && $.trim($('#Price').val()).length != 0)) {
+                        var subtotal = parseFloat($('#Qty').val().trim()) * parseFloat($('#Price').val().trim());
+                        var percent_tax = (subtotal) * (parseFloat(res) / 100);
+                        $('#SubTotal').val((parseFloat(subtotal) - parseFloat(percent_tax)).toFixed(2));
+                    }
+                }
+            },
+            error: function (res) { console.log(res); }
+        });
+
+    }
+
+</script>
+
+
+@Html.ValidationSummary(true)
+
+<div class="form-group">
+    @Html.HiddenFor(model => model._RFQDetailsVM.RfqDetailsId, new { @class = "control-label col-md-2" })
+</div>
+<table class="col-md-12">
+    <thead>
+        <tr>
+            <td class="col-md-4">
+                @Html.LabelFor(model => model._RFQDetailsVM.ItemId, new { @class = "control-label" })
+                <input type="text" class="form-control" id="ItemNames" />
+                <span class="error text-danger">Item Required</span>
+                @Html.Hidden("ItemId")
+            </td>
+            <td class="col-md-4">
+                @Html.LabelFor(model => model._RFQDetailsVM.Description, new { @class = "control-label" })
+                @Html.Editor("Description", new { HtmlAttributes = new { @class = "form-control" } })
+                <span class="error text-danger">Description Required</span>
+            </td>
+            <td class="col-md-4">
+                @Html.LabelFor(model => model._RFQDetailsVM.ManufacturedBy, new { @class = "control-label" })
+                @Html.Editor("ManufacturedBy", new { HtmlAttributes = new { @class = "form-control" } })
+                <span class="error text-danger">Manufactured By Required</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-4">
+                @Html.LabelFor(model => model._RFQDetailsVM.Qty, new { @class = "control-label" })
+                @Html.Editor("Qty", new { HtmlAttributes = new { @class = "form-control" } })
+                <span class="error text-danger">Qty Required</span>
+            </td>
+            <td class="col-md-4">
+                @Html.LabelFor(model => model._RFQDetailsVM.UnitId, new { @class = "control-label" })
+                @Html.DropDownList("UnitId", (IEnumerable<SelectListItem>)ViewBag.UnitList, "Select Unit", new { @class = "form-control" })
+                <span class="error text-danger">Unit Required</span>
+            </td>
+            <td class="col-md-4">
+                @Html.LabelFor(model => model._RFQDetailsVM.Price, new { @class = "control-label" })
+                @Html.Editor("Price", new { HtmlAttributes = new { @class = "form-control" } })
+                <span class="error text-danger">Price Required</span>
+            </td>
+        </tr>
+        <tr>
+            <td class="col-md-4">
+                @Html.LabelFor(model => model._RFQDetailsVM.TaxId, new { @class = "control-label" })
+                @Html.DropDownList("TaxId", (IEnumerable<SelectListItem>)ViewBag.TaxList, "Select Tax", new { @class = "form-control" })
+                <span class="error text-danger">Tax Required</span>
+            </td>
+            <td class="col-md-4">
+                @Html.LabelFor(model => model._RFQDetailsVM.SubTotal, new { @class = "control-label" })
+                @Html.Editor("SubTotal", new { HtmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            </td>
+            <td class="col-md-4">
+                <a class="btn btn-success float-right" id="btnAddToList" style="color: white; margin-top: 25px"><i class="fa fa-plus mr-2"></i>Add To The List</a></td>
+        </tr>
+    </thead>
+</table>
+<br />
+<hr />
+@Html.ValidationMessageFor(model => model._RFQDetailsVMList, "", new { @class = "text-danger", @style = "float:right" })
+
+<table id="RfqDetailsTable" class="table" style="width: 100%">
+    <thead style="background-color: firebrick; color: white">
+        <tr>
+            <td class="hidden">RfqDetailsId</td>
+            <td class="hidden">ItemId</td>
+            <td class="hidden">UnitId</td>
+            <td class="hidden">TaxId</td>
+
+            <td class="col-md-3">Item Name</td>
+            <td class="col-md-2">Description</td>
+            <td class="col-md-2">Manufactured By</td>
+            <td class="col-md-1">Qty</td>
+            <td class="col-md-1">Unit</td>
+            <td class="col-md-1">Price</td>
+            <td class="col-md-1">Tax</td>
+            <td class="col-md-1">Sub Total</td>
+            <td class="col-md-1">Remove</td>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model._RFQDetailsVMList != null)
+        {
+            foreach (var item in Model._RFQDetailsVMList)
+            {
+            <tr>
+                <td class="hidden">@item.RfqDetailsId</td>
+                <td class="hidden">@item.ItemId</td>
+                <td class="hidden">@item.UnitId</td>
+                <td class="hidden">@item.TaxId</td>
+
+                <td class="col-md-3">@item.ItemName</td>
+                <td class="col-md-2">@item.Description</td>
+                <td class="col-md-2">@item.ManufacturedBy</td>
+                <td class="col-md-1">@item.Qty</td>
+                <td class="col-md-3">@item.UnitName</td>
+                <td class="col-md-1">@item.Price</td>
+                <td class="col-md-3">@item.TaxName</td>
+                <td class="col-md-1">@item.SubTotal</td>
+                <td><a class="text-danger remove"><i class="fa fa-trash"></i></a></td>
+            </tr>
+            }
+        }
+
+    </tbody>
+</table>

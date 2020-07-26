@@ -1,0 +1,58 @@
+﻿@model IEnumerable<BusinessEntities.TaxMasterVM>
+
+<div class="tabe table-responsive">
+
+<table id="dataTable" class="table table-condensed table-striped table-bordered" style="width: 100%">
+    <thead class="card-header alert-info">
+        <tr>
+            <th>Sr.No.</th>
+            <th class="hidden">
+                @Html.DisplayNameFor(model => model.TaxId)
+            </th>
+            <th style="width: 600px">
+                @Html.DisplayNameFor(model => model.TaxName)
+            </th>
+            <th style="width: 200px">
+                @Html.DisplayNameFor(model => model.TaxValue)
+            </th>
+            <th style="width: 200px">
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+
+            <th style="width: 100px">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+            int count = 1;
+            foreach (var item in Model)
+            {
+            <tr>
+                <td>@count</td>
+                <td class="hidden">
+                    @Html.DisplayFor(modelItem => item.TaxId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TaxValue)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+
+                <td>
+                    <a onclick="OpenPopUp('@Url.Action("AddOrEditTax", "TaxMaster", new { id = item.TaxId })')" style="color:white"  class=" btn btn-success"><i class="fa fa-edit"></i></a>
+                    <a onclick="Delete(@item.TaxId)" style="color:white"  class="btn btn-warning"><i class="fa fa-trash"></i></a>
+
+                </td>
+            </tr>
+                count++;
+            }
+        }
+    </tbody>
+</table>
+</div>

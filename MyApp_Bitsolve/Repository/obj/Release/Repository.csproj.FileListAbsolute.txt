@@ -1,0 +1,9 @@
+F:\BitSolve\MyApp_Bitsolve\Repository\bin\Release\Repository.dll
+F:\BitSolve\MyApp_Bitsolve\Repository\bin\Release\Repository.pdb
+F:\BitSolve\MyApp_Bitsolve\Repository\bin\Release\DataModel.dll
+F:\BitSolve\MyApp_Bitsolve\Repository\bin\Release\EntityFramework.dll
+F:\BitSolve\MyApp_Bitsolve\Repository\bin\Release\DataModel.pdb
+F:\BitSolve\MyApp_Bitsolve\Repository\bin\Release\EntityFramework.xml
+F:\BitSolve\MyApp_Bitsolve\Repository\obj\Release\Repository.csprojResolveAssemblyReference.cache
+F:\BitSolve\MyApp_Bitsolve\Repository\obj\Release\Repository.dll
+F:\BitSolve\MyApp_Bitsolve\Repository\obj\Release\Repository.pdb

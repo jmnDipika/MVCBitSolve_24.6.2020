@@ -1,0 +1,52 @@
+﻿@model BusinessEntities.TaxMasterVM
+
+@using (Html.BeginForm("AddOrEditTax", "TaxMaster", FormMethod.Post, new { id = "", onsubmit = "return Submit(this);" }))
+{
+   
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.TaxId, new { @class = "control-label col-md-2" })
+
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TaxName, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TaxName,new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TaxName, "", new { @style = "color:red" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TaxValue, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TaxValue,new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TaxValue, "", new { @style = "color:red" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IsActive, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+               @Html.CheckBox("IsActive", new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @style = "color:red" })
+            </div>
+        </div>
+
+        <hr />
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-info float-right"><i class="fa fa-plus mr-2"></i>Save</button>
+                <button type="reset" class="btn btn-warning float-right" style="margin-right: 10px"><i class="fa fa-refresh" style="margin-right: 5px"></i>Reset</button>
+
+            </div>
+        </div>
+
+
+    </div>
+}
+
+

@@ -1,0 +1,89 @@
+﻿@model BusinessEntities.BidMasterVM
+
+@using (Html.BeginForm())
+{
+   
+    <div class="form-horizontal">
+
+        @Html.ValidationSummary(true)
+
+        <div class="form-group">
+            @Html.HiddenFor(model => model.BidId)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BidNo, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BidNo, new { HtmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BidNo, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.BidDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.BidDate, new { HtmlAttributes = new { @class = "form-control", @Value = DateTime.Now.ToShortDateString(), @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.BidDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SupplierName, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.SupplierName, new { @class = "form-control cl-md-4" })
+                @Html.HiddenFor(model => model.supplierId)
+                @Html.ValidationMessageFor(model => model.supplierId, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.RFQId, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.DropDownListFor(model => model.RFQId, (IEnumerable<SelectListItem>)ViewBag.RFQNOs, "Select RFQ NO", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.RFQId, "", new { @class = "text-danger" })
+            </div>
+            @* @Html.LabelFor(model => model.RFQDate, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.RFQDate, new { HtmlAttributes = new { @class = "form-control", @Value = "", @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.RFQDate, "", new { @class = "text-danger" })
+            </div>*@
+        </div>
+
+        <div id="suppDt">
+            <ul class="list-group col-md-6">
+                @*<li class="list-group-item"><span class="col-md-5 text-info text-right">Supplier Name</span> <span id="SupplierName" class="cl-md-7"></span></li>*@
+                <li class="list-group-item"><span class="col-md-5 text-info text-right">Supplier Code</span> <span id="SupplierCode" class="cl-md-7">@Model.SupplierCode</span></li>
+                <li class="list-group-item"><span class="col-md-5 text-info text-right">Order Date</span> <span id="OrderDate" class="cl-md-7">@Model.OrderDate</span></li>
+                <li class="list-group-item"><span class="col-md-5 text-info text-right">Company Name</span> <span id="CompanyName" class="cl-md-7">@Model.CompanyName</span></li>
+            </ul>
+
+            <ul class="list-group col-md-6">
+                <li class="list-group-item"><span class="col-md-5 text-info text-right">Deliver To</span> <span id="DeliverTo" class="cl-md-7" aria-multiline="true">@Model.DeliverTo</span></li>
+                <li class="list-group-item"><span class="col-md-5 text-info text-right">Schedule Date</span> <span id="ScheduleDate" class="cl-md-7">@Model.ScheduleDate</span></li>
+                <li class="list-group-item"><span class="col-md-5 text-info text-right">Bid Valid Untill</span> <span id="BidValidUntill" class="cl-md-7">@Model.BidValidUntil</span></li>
+            </ul>
+        </div>
+
+        <div id="partialBidDtList">
+            @{Html.RenderPartial("_BidDetailsVM", Model);}
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.NetAmount, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.NetAmount, new { @class = "form-control cl-md-4", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.NetAmount, "", new { @class = "text-danger" })
+            </div>
+            @Html.LabelFor(model => model.TotalAmount, new { @class = "control-label col-md-2" })
+            <div class="col-md-4">
+                @Html.TextBoxFor(model => model.TotalAmount, new { @class = "form-control cl-md-4", @readonly = "readonly" })
+                @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="button" id="btnsubmitBid" class="btn btn-info float-right mr-2">Save Changes</button>
+                @*<button type="button" id="btnBidList" class="btn btn-warning float-right" style="margin-right: 10px">Bid List</button>*@
+            </div>
+        </div>
+
+    </div>
+}
+
+
